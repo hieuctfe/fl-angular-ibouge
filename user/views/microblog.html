@@ -1,0 +1,238 @@
+<style>
+    @media (max-width: 767px) {
+        .modal-dialog {
+            /* margin: 105px; */
+        }
+    }
+
+    .microbloggers {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        left: -70px;
+        bottom: 0;
+        height: 450px;
+        width: 55px;
+        padding: 2px;
+        background: transparent;
+
+    }
+
+    .modal-dialog {
+        margin-top: 80px;
+        /* width: 80%; */
+    }
+
+    .modal-content {
+        border-radius: 9px;
+    }
+
+    .ibg-btn.ibg-btn-create: hover {
+        background-color: rgba(98, 71, 159, 0.9);
+        border-color: rgba(98, 71, 159, 1);
+    }
+
+    .existing-groups div {
+        text-align: left;
+    }
+
+    .acceptedInviteHeight {
+        height: 600px;
+    }
+
+    .hasNotAccepted {
+        height: 500px;
+    }
+
+    /* This style is added to the invite button in the microblog depending on if there is anybody to invite or not */
+    .invite-button-orange {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: -webkit-linear-gradient(left, #fa834b 0%, #fab04b 100%);
+        border: #fa834b;
+        color: #FFFFFF;
+        font-size: 11px;
+    }
+
+    .invite-button-faded {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: -webkit-linear-gradient(left, #fa834b 0%, #fab04b 100%);
+        border: #fa834b;
+        color: #FFFFFF;
+        font-size: 11px;
+        opacity: 0.4
+    }
+
+    .inputfile {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        cursor: pointer;
+    }
+
+    .send-image-button:focus,
+    :active {
+        outline: none;
+    }
+
+    .send-image-button:focus {
+        outline: none;
+    }
+</style>
+
+<!--<div ng-if="microBlogCtrl.show">-->
+<div class="microbloggers" style="height: 370px;overflow-y: auto">
+    <div style="padding-top: 10px; width:50px; height: 60px" ng-repeat="user in microblogUsers">
+        <!--ng-repeat="user in friends"-->
+        <img ng-src={{US.getProfilePic(user.profile_pic)}} style="width: 45px; height: 45px; border-radius: 50%;">
+    </div>
+</div>
+<div ng-if="microblogUsers.length > 6" class="microbloggers"
+    style="top: 370px;padding-top: 10px; width:50px; height: 60px">
+    <button class="invite-button-orange">{{moreUsers}}+</button>
+</div>
+<div>
+    <span us-spinner spinner-key="spinner-2"></span>
+    <div ng-repeat="microblog in microblogs" style="height: 660px">
+        <div class="popover-topnav-head">
+            <div class="pop-purple-head">
+                <span style="text-align: left">
+                    {{microblog.name}}
+                </span>
+                <div class="dropdown float-pop-morebtn" style="text-align: right;">
+                    <button class="btnd" style="padding: 0; border: none" ng-click="bookmarkToggle(microblog);"><i
+                            class="fa fa-bookmark"
+                            ng-class="bookmarkClicked ? 'chat-bookmark-fill' :'chat-bookmark-no-fill'" /></button>
+                    <button style="padding: 0; border: none" class="btnd" ng-click="showMyFriends();"><img
+                            src="../assets/img/icons8-Add%20User%20Male-48%20(1).png" class="add-user-to-chat"></button>
+                    <button style="padding: 0; border: none" class="btnd" ng-click="closeWindow(microblog);"><i
+                            class=" fa fa-close add-user-to-chat" style="padding-top: 5px"></i></button>
+                </div>
+            </div>
+        </div>
+        <!--{{message.time | date: "EEEE h:mm"}}-->
+        <div class="popover-topnav-subheading">
+            <div ibg-scroller="{{microblog.room}}" class="chat-wrap-pop"
+                style="float: left; overflow: auto; height: 550px;">
+                <div ng-repeat="message in microblog.messages">
+                    <div class="dayOfChat" style="width: 100%; text-align: center"
+                        ng-if="message.isFirstMsg && message.in || message.in && message.isNewDate">
+                        {{message.time | date: "EEEE h:mm"}}
+                    </div>
+                    <div class="chat-bubble-wrap" ng-if="message.in && !message.isImage">
+                        <div style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+                            <img ng-init="message.widthStyle={'max-width':'82%'}"
+                                ng-src="{{getImageForMicroblog(message.from, microblog)}}"
+                                style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);">
+                            <span style="padding-bottom: 30px;" class="chat-in-time"
+                                ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+                        </div>
+                        <!--<span class="arrow-left-group-chat"></span>-->
+                        <div class="chatBubble">{{message.msg}}</div>
+                    </div>
+                    <div class="dayOfChat" style="width: 100%; text-align: center"
+                        ng-if="message.isFirstMsg && !message.in || !message.in && message.isNewDate">
+                        {{message.time | date: "EEEE h:mm"}}
+                    </div>
+                    <div class="chat-bubble-wrap" ng-if="!message.in && !message.isImage">
+                        <div style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+                            <img ng-init="message.widthStyle={'max-width':'82%'}"
+                                ng-src="{{getImageForMicroblog(message.from, microblog)}}"
+                                style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+                            <div style="padding-bottom: 30px;" class="chat-sent-time" ng-if="!message.in">
+                                {{message.time | date: 'h:mm'}}</div>
+                        </div>
+                        <div class="arrow-right-group-chat"></div>
+                        <div class="chat-sent-bubble" style="max-width: 76%">{{message.msg}}</div>
+                    </div>
+                    <!--This is an outgoing picture message-->
+                    <div class="chat-bubble-wrap" ng-if="message.isImage && !message.in">
+                        <div style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+                            <img ng-init="message.widthStyle={'max-width':'82%'}"
+                                ng-src="{{getImageForMicroblog(message.from, microblog)}}"
+                                style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+                            <div style="padding-bottom: 30px;" class="chat-sent-time" ng-if="!message.in">
+                                {{message.time | date: 'h:mm'}}</div>
+                        </div>
+                        <div class="arrow-right-group-chat"></div>
+                        <div class="chat-sent-bubble" style="max-width: 76%; padding: 3px">
+                            <div><img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+                                    style="width: 107px; height: 88px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--This is an incoming picture message -->
+                    <div class="chat-bubble-wrap" ng-if="message.isImage && message.in">
+                        <div style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+                            <img ng-init="message.widthStyle={'max-width':'82%'}"
+                                ng-src="{{getImageForMicroblog(message.from, microblog)}}"
+                                style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);">
+                            <span style="padding-bottom: 30px;" class="chat-in-time"
+                                ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+                        </div>
+                        <!--<span class="arrow-left-group-chat"></span>-->
+                        <div class="chatBubble" style="padding: 0">
+                            <div>
+                                <img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+                                    style="width: 107px; height: 88px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="chat-reply-area" style="width: 100%;">
+                <div class="col-md-12 col-sm-12 col-12 colPadZero">
+                    <div class="col-md-10 col-sm-10 col-10 colPadZero" style="width: 99%">
+                        <div class="chat-reply-txt" style="width: 100%; border-radius: 8px;">
+
+
+                            <input type="file" name="microblog-message-file" id="{{microblog.room}}" class="inputfile"
+                                ibg-image-file-reader>
+                            <label for="{{microblog.room}}" class="btn btn-warning btn-flat send-image-button"
+                                style="color: #fff; background-color: #5f45a1;border-color: #5f45a1;margin-right: 9px;">
+                                <label for="{{microblog.room}}" style="cursor: pointer; height: 100%; width: 100%; "><i
+                                        class="glyphicon glyphicon-paperclip"></i></label>
+                            </label>
+                            <!--<button class="btn btn-warning btn-flat" style="color: #fff;-->
+                            <!--background-color: #5f45a1;border-color: #5f45a1;margin-right: 9px;"  ng-model="Files" ngf-change="sendImage(microblog, Files);"><i class="glyphicon glyphicon-paperclip"></i>-->
+                            <!--</button>-->
+
+
+
+
+                            <input type="text"
+                                ng-keypress="sendMicroblogMsgOnEnter($event, microblog.microblogMessage, microblog)"
+                                ng-model="microblog.microblogMessage" class="chat-reply-form"
+                                placeholder="Type something to send...">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="myFriends.show"
+    style="overflow-y: auto;position: absolute;top: 10px;right: 0;left: 620px;bottom: 0;height: 450px;width: 55px;padding: 2px;background: transparent;">
+    <div style="padding-top: 10px; width:50px; height: 60px" ng-repeat="myFriend in myFriends.friends">
+        <!--ng-repeat="user in friends"-->
+        <img id="friendImg{{myFriend._id}}" ng-src="{{US.getProfilePic(myFriend.profile_pic)}}"
+            style="width: 45px; height: 45px; border-radius: 50%;" ng-click="selectFriend(myFriend._id)">
+    </div>
+    <div style="text-align: center; padding-top: 10px; width: 50px; height: 60px;">
+        <button class="{{myFriends.friends.length !== 0 ? 'invite-button-orange' : 'invite-button-faded'}}"
+            ng-click="inviteFriends()">INVITE</button>
+    </div>
+</div>
+<!--</div>-->

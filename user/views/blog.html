@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="https://www.ibouge.com/#/login">iBouge</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+
+
+        </li>
+        <li class="nav-item">
+
+        </li>
+
+
+        <a class="nav-link" href="https://www.ibouge.com/about.html">About</a>
+        <a class="nav-link" href="https://www.ibouge.com/contact.html">Contact</a>
+        <a class="nav-link" href="https://www.ibouge.com/mission.html">Mission</a>
+        <a class="nav-link" href="https://www.ibouge.com/pressrelease.html">Press</a>
+        <a class="nav-link" href="https://www.ibouge.com/blog.html">Blog</a>
+        <a class="nav-link" href="https://www.ibouge.com/privacy.html">Privacy & Terms</a>
+
+
+
+        </li>
+        <li class="nav-item">
+
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+
+        <a class="btn btn-outline-warning my-2 my-sm-0" href="https://www.ibouge.com/#/login" type="submit">Login</a>
+      </form>
+    </div>
+  </nav>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>iBouge Blog</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/MDB-Pro-Basic_4.19.0/css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="/MDB-Pro-Basic_4.19.0/css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="/MDB-Pro-Basic_4.19.0/css/style.css">
+    <style>
+      .form-header.blue.accent-1 {
+        background-color: #62479F !important
+      }
+
+      .btn.btn-light-blue {
+        background-color: #62479F !important
+      }
+
+      .btn-floating.blue.accent-1 {
+        background-color: #62479F !important
+      }
+
+      .h1-responsive.font-weight-bold.text-center.my-5 {
+        color: #62479F !important
+      }
+
+      .body {
+        background-color: #fff
+      }
+
+      .navbar.navbar-expand-lg.navbar-dark.bg-dark {
+        background-color: #62479F !important;
+      }
+
+      a.nav-link {
+        font-size: 24px;
+        margin-left: 50px;
+        color: white !important;
+        font-weight: bolder;
+      }
+
+      a.navbar-brand {
+        font-size: 24px;
+        font-weight: bolder;
+      }
+
+      a:hover {
+        color: #FFB940 !important
+      }
+
+      footer {
+        margin-left: 600px;
+      }
+
+      .btn.btn-outline-warning.my-2.my-sm-0:hover {
+        color: #FFB940 !important;
+      }
+
+      h4 {
+        color: black !important;
+      }
+
+      h5.blue-text.pb-2 {
+        color: black !important
+      }
+
+      a.px-2.fa-lg.li-ic {
+        color: #0077B5 !important
+      }
+
+      a.px-2.fa-lg.tw-ic {
+        color: #1DA1F2 !important
+      }
+
+      a.px-2.fa-lg.fb-ic {
+        color: #3b5998 !important
+      }
+
+      a.px-2.fa-lg.in-ic {
+        color: #DD2A7B
+      }
+
+      @media screen and (max-width: 1440px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+      }
+
+      @media screen and (max-width: 1024px) {
+        footer {
+          margin-left: 325px;
+          font-size: 24px;
+        }
+
+      }
+
+      @media screen and (max-width: 768px) {
+        footer {
+          margin-left: 245px;
+          font-size: 18px
+        }
+
+        a.navbar-brand {
+          font-size: 36px;
+        }
+      }
+
+      @media screen and (max-width: 414px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+
+        footer {
+          margin-left: 85px;
+          font-size: 16px;
+        }
+
+        a.navbar-brand {
+          font-size: 30px;
+        }
+      }
+
+
+      @media screen and (max-width: 411px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+
+        footer {
+          margin-left: 75px;
+          font-size: 16px;
+        }
+
+        a.navbar-brand {
+          font-size: 30px;
+        }
+      }
+
+      @media screen and (max-width: 375px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+
+        footer {
+          margin-left: 60px;
+        }
+
+
+      }
+
+      @media screen and (max-width: 360px) {
+        footer {
+          margin-left: 60px;
+          font-size: 16px
+        }
+
+        a.navbar-brand {
+          font-size: 36px;
+        }
+
+      }
+
+      @media screen and (max-width: 320px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+
+        footer {
+          margin-left: 40px;
+        }
+
+        a.navbar-brand {
+          font-size: 30px;
+        }
+      }
+
+      @media screen and (max-width: 280px) {
+        a.navbar-brand {
+          font-size: 36px;
+        }
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Start your project here-->
+
+    <!-- Card package -->
+    <div class="card-columns">
+
+      <!-- Booking card -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+
+
+
+        <!-- Card image -->
+
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top" src="images/IMG_6188.jpeg" target="_blank" style="height:470px;">
+          <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank" id="foo">
+            <h4 class="card-title"><strong>How To Make 2020 Your Best Year Yet</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Lisa Rowlett Leslie</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">A blog post on how to thrive during the pandemic and make the year a success.</p>
+
+
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Booking card -->
+
+      <!-- Card -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Card -->
+
+      <!-- Image overlay card -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>How To Make 2020 Your Best Year Yet</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Lisa Rowlett Leslie</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">Learn how to thrive and make the most during the pandemic.</p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Card -->
+
+      <!--Card-->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired.</p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!--Card-->
+
+      <!-- Material form register -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired.</p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Material form register -->
+
+      <!-- Panel -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired.</p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Panel -->
+
+      <!-- Card -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+
+
+      <!-- Card -->
+
+      <!-- Jumbotron -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Jumbotron -->
+
+      <!-- Card Wider -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+      <!-- Card Wider -->
+
+      <!-- Blue card -->
+
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+
+
+      <!-- Blue card -->
+
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired. </p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+
+      </div>
+
+      <!-- Rotating card -->
+      <div class="card card-cascade wider mt-2 mb-3">
+
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+          <img class="card-img-top"
+            src="https://media1.popsugar-assets.com/files/thumbor/_Ffw5vxGx6wl0dz9zPHNaHHH5EE/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/09/04/073/n/1922441/fcae5df5ab359e8d_travel-photo-checklist/i/Travel-Photo-Ideas.jpg"
+            alt="Card image cap">
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h4 class="card-title"><strong>Lisa Rowlett Leslie</strong></h4>
+          </a>
+          <!-- Subtitle -->
+          <a href="https://www.ibouge.com/blogLandingPage.html" target="_blank">
+            <h5 class="blue-text pb-2"><strong>Information Architect</strong></h5>
+          </a>
+          <!-- Text -->
+          <p class="card-text">This article is about iBouge's exciting networking platform for travelers and bloggers.
+            Click and be inspired.</p>
+
+          <!-- Linkedin -->
+          <a class="px-2 fa-lg li-ic" onclick="sharePreviousLink(this, 'linkedin')"><i
+              class="fab fa-linkedin-in"></i></a>
+          <!-- Twitter -->
+          <a class="px-2 fa-lg tw-ic" onclick="sharePreviousLink(this, 'twitter')"><i class="fab fa-twitter"></i></a>
+          <!-- Dribbble -->
+          <a class="px-2 fa-lg fb-ic" onclick="sharePreviousLink(this, 'facebook')"><i
+              class="fab fa-facebook-f"></i></a>
+          <!--Instagram-->
+          <a href="https://www.instagram.com/ibougeinc/" class="px-2 fa-lg in-ic"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <!-- Rotating card -->
+
+    </div>
+    <!-- Card package -->
+
+    <!-- End your project here-->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="/MDB-Pro-Basic_4.19.0/js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="/MDB-Pro-Basic_4.19.0/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/MDB-Pro-Basic_4.19.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="/MDB-Pro-Basic_4.19.0/js/mdb.min.js"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript" src="socialSharing.js"></script>
+    <script type="text/javascript"></script>
+
+  </body>
+
+</html>
+
+<footer id="footer">
+
+  <p>&copy; iBouge, Inc. 2021
+    Patent Pending</p>
+</footer>

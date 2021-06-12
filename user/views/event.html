@@ -1,0 +1,63 @@
+<section class="content-area-events-bg" style='background-image: url("{{event.eventImage}}")'>
+	<div style="background-color: rgba(70, 52, 132, 0.70); height: 315px; margin-top: -55px">
+		<div class="container containerWidth">
+			<div class="row" style="padding-top: 11%">
+				<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+				<div class="col-md-5 col-sm-5 col-12">
+					<div class="col-md-12 col-sm-12 col-12 text-left colPadZero">
+						<div class="user-prof-name-pad">
+							<h3 class="user-prof-name">{{event.name}}</h3>
+							<span class="user-prof-subinfo"><i class="fa fa-calendar" aria-hidden="true"></i>
+								{{event.dateOfEvent | date: 'longDate'}} at
+								{{event.eventStartTime | date: 'shortTime'}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-5 col-sm-5 col-12">
+					<div class="col-md-12 col-sm-12 col-12 text-center user-prof-btns-pad">
+						<button type="submit" class="btn btn-primary chat-invite-purple-btn"
+							ng-style="!goingStatus ? {'background': '-webkit-linear-gradient(left, #fa834b 0%,#fab04b 100%)'}: {'background-color': 'rgba(131, 121, 183, 0.7)'}"
+							ng-click="notGoingToEvent(event._id)">NOT GOING</button>
+						<button type="submit" class="btn btn-primary chat-invite-orangeEvent-btn"
+							ng-style="goingStatus ? {'background': '-webkit-linear-gradient(left, #fa834b 0%,#fab04b 100%)'}: {'background': 'rgba(131, 121, 183, 0.7)'}"
+							ng-click="goingToEvent(event._id)">GOING</button>
+					</div>
+				</div>
+				<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+			</div>
+		</div>
+		<div class="row user-prof-name-pad">
+			<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-6 col-sm-6 col-12 user-prof-name-pad">
+				<h4 class="user-prof-summary-head-fill">Event Description</h4>
+				<span class="user-prof-summary-fill">{{event.description}}</span>
+				<div class="col-md-6 col-sm-6 col-12 colTopPad">
+					<span class="user-prof-summary-fill">{{event.interested.length}} of your friends are
+						interested</span>
+					<img src="{{friend.img}}" class="event-frnds-photo" ng-repeat="friend in event.interested" />
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12 user-prof-name-pad">
+				<div id="chartEventMap"></div>
+			</div>
+			<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+		</div>
+	</div>
+</section>
+
+<footer class="footer">
+	<div class="container containerWidth">
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-4 col-sm-4 col-12 text-center">
+				<a href="">About</a>
+				<a href="">Team</a>
+				<a href="">Contact</a>
+				<a href="">Mission</a>
+				<a href="">Technology</a>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+		</div>
+	</div>
+</footer>

@@ -1,0 +1,186 @@
+<style>
+	#geocoder {
+		width: 100%;
+		height: 50px;
+		margin-top: 15px;
+	}
+
+	.mapboxgl-ctrl-geocoder {
+		width: 100%;
+		height: 50px;
+		max-width: 100%;
+	}
+
+	.mapboxgl-ctrl-geocoder input[type=text] {
+		font-size: large;
+		margin-top: 5px;
+	}
+
+	.mapboxgl-ctrl-geocoder span.geocoder-icon-search {
+		top: 15px;
+		left: 15px;
+	}
+
+	.mapboxgl-ctrl-geocoder ul {
+		font-size: large;
+	}
+
+	.mapboxgl-ctrl-geocoder {
+		z-index: 0 !important;
+	}
+</style>
+
+<section class="content-area whiteBg">
+	<div class="container containerWidth" ng-if="step == 'step1'">
+		<div class="row">
+			<div class="col-md-3 col-sm-3 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-6 col-sm-6 col-12">
+				<span class="profile-set-head">1/2 Setup your profile</span>
+				<form action="profile_setup_step_two.html">
+					<div class="col-md-12 col-sm-12 col-12 text-center prof-info-box colPadZero">
+						<div class="col-md-4 col-sm-4 col-12 prof-info-box-photo">
+							<div class="prof-info-box-photo-inner">
+								<div class="prof-info-box-photo-div">
+									<img ng-src="{{user.profilePic}}" class="prof-info-box-photo-img" />
+								</div>
+								<div class="prof-info-box-info-div">
+									<a href="" class="uploadProfImg"><img ng-click="changeProfilePic()"
+											src="img/upload-photo-icon.png" class="prof-info-box-info-img" /></a>
+								</div>
+							</div>
+							<h4 class="prof-name">{{sess.fname}} {{sess.lname}}</h4>
+							<span class="prof-sub-info">{{user.gender}} <b class="prof-sub-info-seperator">.</b>
+								<span ng-if="user.age">{{user.age}}years</span></span>
+						</div>
+						<div class="col-md-8 col-sm-8 col-12 prof-info-box-info">
+							<h4 class="prof-info">About me <i class="fa fa-pencil-square-o prof-info-edit-icon"
+									aria-hidden="true"></i></h4>
+
+							<textarea ng-model="user.profile.about_me" class="form-control prof-info-text" rows="7"
+								placeholder="Tell us a little bit about yourself"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6 col-xs-12" style="padding: 0px;">
+
+						<div class="form-group form-spacing" style="margin: 0px;margin-right: 5px;">
+							<label for="exampleInputEmail1">My Interests</label>
+							<textarea type="text" ng-blur="updateOnEnter($event, user.profile.interests, 'interest')"
+								ng-model="ctrl.interest" class="form-control" id="exampleInput1" rows="5"
+								placeholder="eg: Traveling"></textarea>
+							<!-- <p ng-if="user.profile.interests.length === 1" class="fadeOut"
+								style="font-size: large; margin: 7px; color: #07d326">You can add more than one if you'd
+								like.</p> -->
+
+						</div>
+						<!-- <div class="interests-wrap">
+							<div class="interests-chip" ng-repeat="interest in user.profile.interests">
+								{{interest}}<a ng-click="user.profile.interests.splice($index, 1)"><i
+									class="fa fa-remove interestsIcon"></i></a>
+								</div>
+							</div> -->
+					</div>
+					<div class="col-md-6 col-sm-6 col-xs-12" style="padding: 0px;">
+
+						<div class="form-group form-spacing" style="margin: 0px;">
+							<label for="exampleInputEmail1">My Languages</label>
+							<textarea type="text" ng-blur="updateOnEnter($event, user.profile.languages, 'language')"
+								rows="5" ng-model="ctrl.language" class="form-control" id="exampleInput2"
+								placeholder="eg: English"></textarea>
+							<!-- <p ng-if="user.profile.languages.length === 1" class="fadeOut"
+							style="font-size: large; margin: 7px; color: #07d326">You can add more than one if you'd
+							like.</p> -->
+
+						</div>
+						<!-- <div class="interests-wrap">
+						<div class="interests-chip" ng-repeat="language in user.profile.languages">
+							{{language}}<a ng-click="user.profile.languages.splice($index, 1)"><i
+									class="fa fa-remove interestsIcon"></i></a>
+						</div>
+					</div> -->
+					</div>
+					<button type="button" ng-click="completeStep1()" class="btn btn-primary profinfo-submit-btn"
+						style="width: 100%">CREATE MY ACCOUNT</button>
+				</form>
+			</div>
+			<div class="col-md-3 col-sm-3 col-12 text-center d-block d-sm-none"></div>
+		</div>
+	</div>
+
+	<div class="container containerWidth" ng-if="step == 'step2'">
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-4 col-sm-4 col-12">
+				<span class="profile-set-head">2/3 Setup your location</span>
+				<h4 class="inner-subheadings">Add your location: Click on map</h4>
+				<h5 style="text-align: center">Please tag yourself somewhere in your neighbourhood so you can find
+					people
+					around you.</h5>
+				<form action="profile_setup_step_three.html">
+					<!-- Using microblog-map directive below only because -->
+					<!-- it was convenient to reuse the code, name is ambiguous -->
+					<div microblog-map style="width: 100%; height: 40%"></div>
+					<!-- <p style="font-size: 1.5em; text-align: center; margin-top: 20px">Search for an address</p> -->
+					<div id="geocoder" class="hidden"></div>
+					<button type="button" ng-click="completeStep2()"
+						class="btn btn-primary login-submit-btn">CONTINUE</button>
+				</form>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+		</div>
+	</div>
+
+	<div class="container containerWidth" ng-if="step == 'step3'">
+		<div class="row">
+			<div class="col-md-2 col-sm-2 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-8 col-sm-8 col-12 text-center">
+				<span class="profile-set-head">3/3 Follow the location</span>
+				<!-- <h4 class="inner-subheadings-more" ng-if="profileSetupMapVariable == 1">Choose a country</h4>
+				<h4 class="inner-subheadings-more" ng-if="profileSetupMapVariable == 2">Pick a state</h4>
+				<h4 class="inner-subheadings-more" ng-if="profileSetupMapVariable == 3">Follow your favorite city</h4>
+				<h4 class="inner-subheadings-more" ng-if="profileSetupMapVariable == 4">Drag the center of the circle to
+					the area you'd like to follow</h4>
+				<span class="login-greeting-sub-head" ng-if="profileSetupMapVariable == 3">You may need to zoom in to
+					see more cities.</span>
+				<span class="login-greeting-sub-head" ng-if="profileSetupMapVariable == 4">You may need to zoom out to
+					see the full circle.</span>
+				<br>
+				<span class="login-greeting-sub-head" ng-if="profileSetupMapVariable == 4">Circle radius can be changed.
+					Click, hold and drag to edit.</span> -->
+				<form>
+					<div style=" width: 100%">
+						<h4 class="inner-subheadings-more" style="margin-bottom: 30px;"> Select 3 cities to follow</h4>
+						<div class="col-md-4 col-sm-4 col-12">
+							<div profile-setup-map-directive></div>
+							<!-- <div id="geocoder"></div> -->
+							<div id="followLocation1Map" style="width: 100%; height: 100%;" class="hidden"></div>
+							<p class="login-greeting-sub-head" style="text-align: left !important;">First City</p>
+							<div id="followLocation1Search" style="margin-top: 20px; margin-bottom: 30px;">
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-12">
+
+							<div id="followLocation2Map" style="width: 100%; height: 100%;" class="hidden"></div>
+							<p class="login-greeting-sub-head mt-2" style="text-align: left !important;">Second City</p>
+							<div id="followLocation2Search" style="margin-top: 20px; margin-bottom: 30px;">
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-12">
+							<div id="followLocation3Map" style="width: 100%; height: 100%;" class="hidden"></div>
+							<p class="login-greeting-sub-head mt-2" style="text-align: left !important;">Third City</p>
+							<div id="followLocation3Search" style="margin-top: 20px; margin-bottom: 30px;">
+							</div>
+						</div>
+					</div>
+					<!-- <button type="button" class="btn btn-primary login-submit-btn"
+						ng-if="profileSetupMapVariable != 4">Almost there!</button> -->
+					<button type="button" ng-if="profileSetupMapVariable == 4" ng-click="completeStep3()"
+						class="btn btn-primary login-submit-btn"
+						[disabled]="profileSetupMapVariable == 4 ? false : true">CREATE MY
+						ACCOUNT!</button>
+				</form>
+			</div>
+			<div class="col-md-2 col-sm-2 col-12 text-center d-block d-sm-none"></div>
+		</div>
+	</div>
+
+</section>

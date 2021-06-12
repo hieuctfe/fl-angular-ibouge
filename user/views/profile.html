@@ -1,0 +1,407 @@
+<style type="text/css">
+	.friends-list {
+		display: inline-flex;
+		overflow-x: scroll !important;
+		width: 100%;
+	}
+
+	.friends-list::-webkit-scrollbar {
+		width: 0px;
+		height: 5px;
+		background: #E7E6EC;
+	}
+
+	.friends-list::-webkit-scrollbar-thumb {
+		background: #51458D;
+	}
+</style>
+<section class="">
+	<div class="container-fluid" style="padding-top: 8%; background-color: #51458D;">
+		<div class="">
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+			<div class="col-md-5 col-sm-5 col-xs-12" style="padding-bottom: 20px;">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-left colPadZero">
+					<div class="col-md-5 col-sm-5 col-xs-12 ">
+						<img ng-click="clickProfileImage()" style="max-width:100%; max-height:100%;object-fit: cover;"
+							src="{{userService.getProfilePic(user.profile_pic)}}" class="userprof-img-large" />
+					</div>
+					<div class="col-md-7 col-sm-7 col-xs-12 user-prof-name-pad hidden-xs">
+						<h3 class="user-prof-name">{{user.fname}} {{user.lname}}</h3>
+						<!-- Lisa does not want the address to show up-->
+						<!--<span class="user-prof-subinfo">{{user.location.addrs1}}, {{user.location.addrs2}}</span> -->
+					</div>
+					<div class="col-md-7 col-sm-7 col-xs-12 user-prof-name-pad visible-xs">
+						<h3 style="color: #FFF;font-size: 250%;text-align: center;">{{user.fname}} {{user.lname}}</h3>
+						<!-- Lisa does not want the address to show up-->
+						<!--<span class="user-prof-subinfo">{{user.location.addrs1}}, {{user.location.addrs2}}</span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<div ng-if="showInviteBtns" class="col-md-12 col-sm-12 col-xs-12 text-center  user-prof-btns-pad">
+					<div class="hidden-xs">
+						<button type="button" class="btn btn-primary chat-invite-purple-btn"
+							ng-click="inviteToChat()">INVITE TO CHAT</button>
+						<button ng-if="user.friend_status < 0" type="button"
+							class="btn btn-primary chat-invite-orange-btn" ng-click="addAsFriend()">ADD AS
+							FRIEND</button>
+						<button ng-if="user.friend_status == 0" type="button"
+							class="btn btn-primary chat-invite-orange-btn" ng-click="unfriendUser()">UNFRIEND</button>
+						<button ng-if="user.friend_status == 1" type="button"
+							class="btn btn-primary chat-invite-orange-btn">FRIEND REQUEST SENT</button>
+						<button ng-if="user.friend_status == 2" type="button"
+							class="btn btn-primary chat-invite-orange-btn" ng-click="acceptFriendRequest()">ACCEPT
+							FRIEND REQUEST</button>
+					</div>
+					<div class="visible-xs">
+						<button type="button" class="btn btn-primary chat-invite-purple-btn-sm"
+							ng-click="inviteToChat()">INVITE TO CHAT</button>
+						<button ng-if="user.friend_status < 0" type="button"
+							class="btn btn-primary chat-invite-orange-btn-sm" ng-click="addAsFriend()">ADD AS
+							FRIEND</button>
+						<button ng-if="user.friend_status == 0" type="button"
+							class="btn btn-primary chat-invite-orange-btn-sm"
+							ng-click="unfriendUser()">UNFRIEND</button>
+						<button ng-if="user.friend_status == 1" type="button"
+							class="btn btn-primary chat-invite-orange-btn-sm">FRIEND REQUEST SENT</button>
+						<button ng-if="user.friend_status == 2" type="button"
+							class="btn btn-primary chat-invite-orange-btn-sm" ng-click="acceptFriendRequest()">ACCEPT
+							FRIEND REQUEST</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+	</div>
+	<div class="container-fluid">
+
+		<div class="row" style="padding: 2%;">
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes" style="margin-bottom: 0px;"
+					ng-if="!user.profile.about_me || user.profile.about_me.trim() == ''">
+					<h4 class="user-prof-summary-head">No summary has been added</h4>
+					<span class="user-prof-summary">{{user.fname}} {{user.lname}} hasn't had <br />a chance to add a
+						summary.</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-fill" style="margin-bottom: 0px;"
+					ng-if="user.profile.about_me && user.profile.about_me.trim() != ''">
+					<h4 class="user-prof-summary-head-fill">My Summary</h4>
+					<span class="user-prof-summary-fill">{{user.profile.about_me}}</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes" style="margin-bottom: 0px;"
+					ng-if="!user.profile.interests || user.profile.interests.length == 0">
+					<h4 class="user-prof-summary-head">About Me info hasn't been added</h4>
+					<span class="user-prof-summary">{{user.fname}} {{user.lname}} hasn't had <br />a chance to fill this
+						out
+						yet.</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-fill" style="margin-bottom: 0px;"
+					ng-if="user.profile.interests && user.profile.interests.length > 0">
+					<h4 class="user-prof-summary-head-fill">About me</h4>
+					<!-- <div microblog-map style="width: 400px; height: 40%"></div> -->
+					<!-- <p style="font-size: 1.5em; text-align: center; margin-top: 20px">Search for an address</p> -->
+					<!-- <div id="geocoder" class="hidden"></div> -->
+					<span class="user-prof-summary-fill">
+						<div class="abt-me-icon-set1">
+							<img src="img/abt-me-icon1.png" class="abt-me-icon-images" />
+							<span class="user-prof-summary-fill"><b>Interests:</b> &nbsp;
+								<span ng-repeat="interest in user.profile.interests">
+									<span ng-if="!$last">{{interest}}, </span>
+									<span ng-if="$last">{{interest}} </span>
+									<span>
+									</span>
+						</div>
+						<div class="abt-me-icon-set2">
+							<img src="img/abt-me-icon2.png" class="abt-me-icon-images" />
+							<span class="user-prof-summary-fill"><b>Languages:</b> &nbsp;
+								<span ng-repeat="language in user.profile.languages">
+									<span ng-if="!$last">{{language}}, </span>
+									<span ng-if="$last">{{language}} </span>
+								</span>
+							</span>
+						</div>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<div class="col-md-12 col-sm-12 col-xs-12 prof-info-boxes-fill" style="margin-bottom: 0px;">
+					<div id='map' style='width: 100%; height: 300px;'></div>
+					<h5><b>{{locationName}}</b></h5>
+				</div>
+			</div>
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+		</div>
+	</div>
+	<div class="container-fluid">
+
+		<div class="row" style="padding: 2%;">
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-large"
+					ng-if="friends.length == 0">
+					<h4 class="user-prof-summary-head">No friends have been added</h4>
+					<span class="user-prof-summary">{{user.fname}} {{user.lname}} hasn't had <br />a chance to add
+						friends.</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-large-fill"
+					ng-if="friends.length > 0">
+					<h4 class="user-prof-summary-head-fill">My Friends <span
+							class="abt-me-frnds-grey">&#40;{{friends.length}}&#41;</span></h4>
+					<div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="friend in friends">
+						<a ui-sref="profile({USER_ID: friend._id})">
+							<div class="frnds-photo-inner">
+								<div class="frnds-face-photo-div">
+									<img src="{{userService.getProfilePic(friend.profile_pic)}}"
+										class="frnds-face-photo-img" />
+								</div>
+								<div class="frnds-status-info-div">
+									<a href="" class="uploadProfImg">
+										<img ng-if="friend.is_online" src="img/contact-online.png"
+											class="frnds-status-img" />
+										<img ng-if="!friend.is_online" src="img/contact-idle.png"
+											class="frnds-status-img" />
+									</a>
+								</div>
+							</div>
+							<h4 class="frnds-name">{{friend.fname}} {{friend.lname}}</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-large"
+					ng-if="!user.privacy.share_recent_events">
+					<h4 class="user-prof-summary-head">User is hiding their events</h4>
+					<span class="user-prof-summary">{{user.fname}} {{user.lname}} is hiding <br />events.</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center prof-info-boxes-large-fill"
+					ng-if="user.privacy.share_recent_events" style="max-height:670px">
+					<h4 class="user-prof-summary-head-fill">Status Updates</h4>
+
+					<div ng-if="allowPost" style="padding:10px;">
+						<p class="emoji-picker-container" style="text-align: center;">
+							<input type="file" name="file" id="file" class="inputfile" ibg-image-file-reader
+								caption="status.message.message" />
+							<button class="upload-pic-status-button" style="
+							  width: 10%;
+							  height: 5%;
+							  float: left;
+							  border-radius: 5px;
+							  text-align: center;
+							  border: 2px solid #dadce8;
+							  font-size: 1.3em;
+							  background-color: white;
+							  padding: 0;
+							">
+								<label for="file" style="cursor: pointer; height: 100%; width: 100%;"><i
+										style="margin-top: 11px;" class="fa fa-paperclip"></i></label>
+							</button>
+							<input type="hidden" name="status" id="status-hidden-input" />
+							<textarea rows="1" emoji-picker="emoji-picker" emoji-attachment-location="top left"
+								emoji-menu-location="bottom right" type="text" class="form-control status-message"
+								placeholder="What's on your mind?" ng-model="status.message.message"
+								id="status-emoji-area" ng-keyup="handleKeyDown($event)" style="
+							  float: left;
+							  width: 76%;
+							  height: 5%;
+							  border-radius: 5px;
+							  text-align: left;
+							  border: 2px solid #dadce8;
+							  font-size: 1.3em;
+							  resize: none;
+							"></textarea>
+							<button style="
+							  width: 14%;
+							  height: 5%;
+							  float: left;
+							  border-radius: 5px;
+							  text-align: center;
+							  border: 2px solid #dadce8;
+							  font-size: 1.3em;
+							  background-color: white;
+							  padding: 7px 0 0 0;
+							  box-shadow: unset;
+							" ng-click="newStatus($event, status.message.message)">
+								<label for="button" style="cursor: pointer; height: 100%;">Post</label>
+							</button>
+						</p>
+						<div ng-if="upload.src" style="clear: both;"></div>
+						<div ng-if="upload.type == 'image'" class="thumbnail">
+							<a href="" ng-click="removeThumbnail()"><i class="fa fa-times"
+									style="float: right; margin-right: 7px; margin-bottom: 3%; margin-top: 2%;"></i></a>
+							<img class="img-responsive" src="{{upload.src}}" alt="" style="margin-bottom: 10px;" />
+						</div>
+						<div ng-if="upload.type == 'video'" class="thumbnail">
+							<a href="" ng-click="removeThumbnail()"><i class="fa fa-times"
+									style="float: right; margin-right: 7px; margin-bottom: 3%; margin-top: 2%;"></i></a>
+							<video width="320" height="240" poster="/images/w3html5.gif" controls
+								class="img-responsive">
+								<source ng-src="{{upload.src | trusted}}" type="{{upload.mimeType}}" />
+								Your browser does not support the video tag.
+							</video>
+						</div>
+					</div>
+					<div style="height: 520px; width: 100%; overflow-y: auto">
+
+						<div class="status-updates-wrap-converse" ng-if="allStatusUpdates.length === 0">
+							<div class="col-7">
+								<div class="text-center" style="padding: 10px 0 0 0;">
+									<h4>No posts have been published yet.
+									</h4>
+								</div>
+							</div>
+						</div>
+
+						<div class="status-updates-wrap-converse" ng-repeat="status in allStatusUpdates">
+							<div class="col-md-11 col-sm-11 col-xs-11 colPadZero">
+								<div class="col-md-2 col-sm-2 col-xs-2 colPadZero">
+									<a ui-sref="profile({USER_ID: status.from})">
+										<img ng-src="{{status.profilePic}}" class="events-convers-img" />
+									</a>
+								</div>
+								<div class="col-md-7 col-sm-7 col-xs-7 colPadZero">
+									<div class="event-heading-style" style="padding: 10px 0 0 0;">
+										<span>{{status.userFullname}}</span>
+									</div>
+									<div class="event-sub-heading-style" style="text-transform: none; padding: 0;">
+										<span style="font-size: 15px;">{{status.time | date: 'MMMM dd'}} at
+											{{ status.time | date: 'shortTime'}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-1 col-sm-1 col-xs-1 colPadZero" ng-if="status.from == sess._id">
+								<a href="" ng-confirm-click="Are you sure to delete this status?"
+									confirmed-click="removeStatus(status)"><i class="fa fa-times"
+										style="float: right; margin-right: 7px; margin-top: 10px;"></i></a>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 colPadZero">
+								<div class="event-heading-convers"
+									style="font-size: 1.6em; padding: 25px; text-align: center; white-space: normal;"
+									ng-hide="status.status_type == 'image' || status.status_type == 'video'">
+
+									<p ng-bind-html="linkify(status.message)"></p>
+								</div>
+								<div ng-if="status.caption != ''" class="event-heading-convers"
+									style="font-size: 1.6em; padding: 25px; text-align: center; white-space: normal;"
+									ng-hide="status.status_type == 'text'">
+									<p ng-bind-html="status.caption | linky:'_blank'"></p>
+								</div>
+								<iframe ng-if="status.message.includes('https://www.youtube.com/')"
+									style="width: 100%; height: 315px; padding:5px;" src="{{status.message | trusted}}"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen></iframe>
+								<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/eAagtcAup0o" frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen></iframe> -->
+								<a href="{{status.message}}" data-lightbox="{{status.message}}">
+									<img ng-if="status.status_type == 'image'" src="{{status.message}}"
+										style="width: 100%; margin-top: 4px; padding: 5px;" />
+								</a>
+								<video ng-if="status.status_type == 'video'" controls
+									style="width: 100%; margin-top: 4px; padding: 5px;">
+									<source ng-src="{{status.message | trusted}}" type="video/mp4" />
+									Your browser does not support the video tag.
+								</video>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 colPadZero comment-section">
+								<input type="hidden" name="status" id="hidden-comment-{{status._id}}" />
+								<input placeholder="Write a comment!" style="
+								  width: 88%;
+								  height: 5%;
+								  border-radius: 5px;
+								  text-align: left;
+								  border: 2px solid #dadce8;
+								  font-size: 1.2em;
+								  resize: none;
+								  float: left;
+								  margin-bottom: 10px;
+								  margin-left: 5px;
+								  text-indent: 10px;
+								" emoji-picker="emoji-picker" emoji-attachment-location="top left" emoji-menu-location="bottom right"
+									ng-model="status.reply.message"
+									ng-keypress="newReply($event, status, status.reply.message)"
+									ng-keyup="handleKeyDown($event, status._id)" id="comment-{{status._id}}" />
+								<a href="" class="status-update-like">
+									<i ng-class="{'status-update-box-liked' : status.likes.length > 0}"
+										class="fa fa-heart" aria-hidden="true"
+										ng-click="addLikeToStatusOrReply(status);">
+									</i>
+									<span ng-click="showsLikesList(status.likes)"
+										ng-if="status.likes.length > 0">{{status.likes.length}}</span>
+								</a>
+							</div>
+							<div class="status-updates-wrap-converse"
+								ng-repeat="reply in status.replies | orderBy: '_id'">
+								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 colPadZero"
+									style="border-left: 1px solid lightgrey; width: 99%;">
+									<div class="col-md-2 col-sm-2 col-xs-2 colPadZero">
+										<a ui-sref="profile({USER_ID: reply.from})">
+											<img ng-src="{{reply.profilePic}}" class="events-convers-img-small" />
+										</a>
+									</div>
+									<div class="col-md-7 col-sm-7 col-xs-7 colPadZero">
+										<div class="event-heading-style-small" style="padding: 10px 0 0 0;">
+											<span class="ng-binding">{{reply.userFullname}}</span>
+										</div>
+										<div class="event-sub-heading-style-small"
+											style="text-transform: none; padding: 0;">
+											<span style="font-size: 15px;"
+												class="ng-binding">{{reply.time | date: 'MMMM dd'}} at
+												{{ reply.time | date: 'shortTime'}}</span>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="col-md-1 col-sm-1 col-xs-1 colPadZero"
+									ng-if="reply.from == sess._id || status.from == sess._id">
+									<a href="" ng-confirm-click="Are you sure to delete this reply?"
+										confirmed-click="removeReply(reply, status)"><i class="fa fa-times"
+											style="float: right; margin-right: 7px; margin-top: 4px;"></i></a>
+								</div> -->
+								<br />
+								<div class="col-md-12 event-heading-convers"
+									style="font-size: 1.1em; padding: 21px; text-align: left; white-space: normal;"
+									ng-if="reply.reply_type == 'text'">
+									<p ng-bind-html="reply.message | linky:'_blank'"></p>
+									<!-- <a href="" class="status-update-like">
+										<i ng-class="{'status-update-box-liked' : reply.likes.length > 0}"
+											class="fa fa-heart" aria-hidden="true"
+											ng-click="addLikeToStatusOrReply(status, reply);">
+										</i>
+										<span ng-click="showsLikesList(reply.likes)"
+											ng-if="reply.likes.length > 0">{{reply.likes.length}}</span>
+									</a> -->
+								</div>
+							</div>
+						</div>
+						<!-- <div class="events-wrap-view" ng-repeat="event in usersEvents" ng-click="viewEvent(event)"
+							style="cursor: pointer">
+							<div class="col-md-2 col-sm-2 col-xs-2 colPadZero">
+								<img style="height: 70px;width: 70px;" src="{{event.eventImage}}"
+									class="events-more-img" />
+							</div>
+							<div class="col-md-10 col-sm-10 col-xs-10 colPadZero">
+								<div class="event-info-txt">
+									<span>{{event.name}}</span>
+								</div>
+								<div class="event-info-date">
+									<span>{{event.dateOfEvent | date: 'longDate'}}</span>
+								</div>
+								<div class="event-info-txt">
+									<div class="event-info-venue " style="text-wrap: inherit">{{event.place}}</div>
+								</div>
+								<div class="event-info-date">
+									<span class="event-info-venue ">{{event.eventStartTime | date : 'shortTime'}}</span>
+								</div>
+							</div>
+						</div> -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+	</div>
+</section>

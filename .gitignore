@@ -1,0 +1,7 @@
+.idea
+*.DS_Store
+upload/
+node_modules
+config/config.json
+/node_modules/
+qq

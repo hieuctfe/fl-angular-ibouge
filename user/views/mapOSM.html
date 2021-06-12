@@ -1,0 +1,121 @@
+<div>
+    <div id="mapOSM" map-osm ng-style="{'width': (cityClicked) ? '80%': '100%'}"></div>
+    <div ng-if="cityClicked">
+        <div>
+            <div style="position: fixed;border-radius: 5px ;right: 1px; top: 90px; width: 20%; margin-top: -2.5em;height: 100%; overflow-y: auto;"
+                class="user-event-box">
+                <h2 class="amount-of-microblogs" ng-if="viewMicroblogs">{{numberOfMicroblogs}} Microblogs</h2>
+                <h2 class="amount-of-microblogs" ng-if="viewUsers">{{numberOfUsers}} Users</h2>
+                <h2 class="amount-of-microblogs" ng-if="viewEvents">{{numberOfEvents}} Events</h2>
+
+                <div class="events-wrap-view" ng-repeat="microblog in allMicroblogs"
+                    ng-click="openMicroblog(microblog);" ng-if="viewMicroblogs">
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero">
+                        <img ng-src="{{microblog.microblogImg}}" class="img-of-creator" />
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-7 colPadZero">
+                        <div class="name-of-microblog">
+                            <span>{{microblog.title}}</span>
+                        </div>
+                        <div class="amount-of-users">
+                            <a href="" class="microblog-box-users microblog-users"><i class="fa fa-user"
+                                    aria-hidden="true"></i><span>{{microblog.users}}</span></a>
+                            <span>{{microblog.date | date: mediumDate}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero microblog-seperator-border">
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-1 colPadZero">
+                        <a class="microblog-arrow-view"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+                <div class="events-wrap-view" ng-repeat="user in allUsers" ui-sref="profile({USER_ID: user.userID})"
+                    ng-if="viewUsers">
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero">
+                        <img ng-src="{{ user.profilePic ? user.profilePic : 'img/upload-photo.png' }}"
+                            class="img-of-creator" />
+                        <div class="frnds-status-info-div">
+                            <img ng-if="user.online" src="img/contact-online.png"
+                                style="width: 40%;border-radius: 50%;" />
+                            <img ng-if="!user.online" src="img/contact-idle.png"
+                                style="width: 40%;border-radius: 50%;" />
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-7 colPadZero">
+                        <div class="name-of-microblog">
+                            <span>{{user.firstName}} {{user.lastName}}</span>
+                        </div>
+                        <div class="amount-of-users">
+                            <span
+                                ng-style="user.gender === 'M' ? { 'color': '#1E90FF' } : { 'color': '#1E90FF' }">{{user.gender ? user.gender : ""}}
+                                {{user.dateOfBirth ? user.dateOfBirth: ""}} - </span>
+                            {{getInterests(user.interests)}}
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero microblog-seperator-border">
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-1 colPadZero">
+                        <a class="microblog-arrow-view"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+                <div class="events-wrap-view" ng-repeat="event in allEvents" ui-sref="event({eventId: event.id})"
+                    ng-if="viewEvents" style="cursor: pointer">
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero">
+                        <img ng-src="{{event.eventImage}}" class="img-of-creator" />
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-7 colPadZero">
+                        <div class="name-of-microblog">
+                            <span>{{event.name}}</span>
+                        </div>
+                        <div class="amount-of-users">
+                            <a href="" class="microblog-box-users microblog-users"><i class="fa fa-user"
+                                    aria-hidden="true"></i><span>{{event.usersWhoAreGoing.length}}</span></a>
+                            <span>{{event.dateOfEvent}} @ {{event.eventStartTime}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-2 colPadZero microblog-seperator-border">
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-1 colPadZero">
+                        <a class="microblog-arrow-view"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Float Menu div -->
+    <div id="floatMenu" ng-if="cityClicked">
+        <div class="float-btn">
+            <div class="dropdown">
+                <a class="btn btn-default float-btn-wrap" ng-mouseover="mouseEvent('mouseOverUserIcon')"
+                    ng-mouseleave="mouseEvent('mouseLeaveUserIcon')" ng-click="mouseEvent('mouseClickUserIcon')">
+                    <img src="img/prof-float-ico.png" class="float-btn-icons" />
+                </a>
+            </div>
+        </div>
+
+        <div class="float-btn">
+            <div class="dropdown">
+                <button class="btn btn-default popper float-btn-wrap" type="button"
+                    ng-mouseover="mouseEvent('mouseOverEventIcon')" ng-mouseleave="mouseEvent('mouseLeaveEventIcon')"
+                    ng-click="mouseEvent('mouseClickEventIcon')">
+                    <img src="img/loc-float-ico.png" class="float-btn-icons" />
+                </button>
+            </div>
+        </div>
+
+        <div class="float-btn">
+            <div class="dropdown">
+                <button class="btn btn-default float-btn-wrap" type="button" id="myBtn"
+                    ng-mouseover="mouseEvent('mouseOverMicroblogIcon')"
+                    ng-mouseleave="mouseEvent('mouseLeaveMicroblogIcon')"
+                    ng-click="mouseEvent('mouseClickMicroblogIcon')">
+                    <img src="img/chat-float-ico.png" class="float-btn-icons" />
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Float Menu div -->
+</div>

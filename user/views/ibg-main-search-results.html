@@ -1,0 +1,28 @@
+<div id="myDIV" class="hidden-xs" ng-if="showResults"
+    style="width: 400px; left: -260px; position: absolute; background: white; color: black; padding: 10px 0px; border-radius: 5px; box-shadow: 0 0 7px #312c2c; margin-top: 5px;">
+    <ul style="list-style: none; padding: 0;">
+        <li ng-repeat="item in search.results" style="display: flex; padding: 1px 15px;">
+            <img src="{{getProfilePic(item.profile_pic)}}" style="width: 40px; height: 40px; margin-right: 5px;">
+            <div>
+                <div style="padding: 9px;">
+                    <a style="font-size: 15px;" ui-sref="profile({USER_ID: item._id})"
+                        ng-click="$hide(); clear()">{{item.fname}} {{item.lname}}</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div id="myDIV" class="visible-xs" ng-if="showResults"
+    style="width: 100%; background: white; color: black; padding: 10px 0px; border-radius: 5px; box-shadow: 0 0 7px #312c2c; margin-top: 5px;">
+    <ul style="list-style: none; padding: 0;">
+        <li ng-repeat="item in search.results" style="display: flex; padding: 1px 15px;">
+            <img src="{{getProfilePic(item.profile_pic)}}" style="width: 40px; height: 40px; margin-right: 5px;">
+            <div>
+                <div style="padding: 9px;">
+                    <a style="font-size: 15px;" ui-sref="profile({USER_ID: item._id})"
+                        ng-click="$hide(); clear()">{{item.fname}} {{item.lname}}</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

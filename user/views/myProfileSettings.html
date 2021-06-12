@@ -1,0 +1,525 @@
+<section class="">
+	<div class="">
+		<div class="container" style="padding-top: 8%; background-color: #4e388d; width: 100%;">
+			<div class="row">
+				<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+				<div class="col-md-10 col-sm-10 col-xs-12">
+					<h3 class="my-prof-sett-name" style="text-align: center !important;">Settings</h3>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+
+
+		<div class="row" style="padding: 2%;">
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="col-md-12 col-sm-12 col-xs-12 my-prof-sett-box-style colPadZero">
+					<div class="my-prof-img-box-photo my-prof-img-box">
+						<div class="my-prof-img-box-inner">
+							<div class="my-prof-img-box-photo-div">
+
+								<img src=" {{myProfileSettings.img}}" class="my-prof-img-box-photo-img" />
+
+							</div>
+							<div class="my-prof-img-box-info-div">
+								<a href="" class="uploadProfImg"><img ng-click="changeProfilePic()"
+										src="img/upload-photo-icon-purple.png" class="my-prof-img-box-info-img" /></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="my-sett-tabs-style">
+						<!-- Nav tabs -->
+						<ul class="nav nav-pills nav-stacked" role="tablist">
+							<li role="presentation" ng-class="{active : myProfileSettings.activeTab == tab.key}"
+								ng-repeat="tab in tabs" ng-click="myProfileSettings.activeTab = tab.key">
+								<a>{{tab.value}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7 col-sm-7 col-xs-12 my-prof-sett-tab-content-style">
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="profile"
+						ng-class="{active : myProfileSettings.activeTab === 'profile'}">
+						<h3 class="tab-Head-Txts">My Profile</h3>
+						<form>
+							<div class="tab-prof-sett-white-box">
+								<h4 class="prof-info">
+									About me <i class="fa fa-pencil-square-o prof-info-edit-icon"
+										aria-hidden="true"></i>
+								</h4>
+								<p ng-if="myProfileSettings.profile.about_me.length < 3 && updateProfilePropertiesNotFulfilled"
+									class="fadeOut" style="font-size: large; color: #f8a454;">
+									Please fill out a brief description about yourself.
+								</p>
+								<textarea class="form-control prof-info-text tab-txtarea-style" rows="5"
+									placeholder="How would your best friend describe you?"
+									ng-model="myProfileSettings.profile.about_me"></textarea>
+							</div>
+							<div class="form-group form-spacing">
+								<label for="exampleInputEmail1" class="tab-inputarea-txt-style">My Interests - Please
+									add an
+									interest and press enter/return</label>
+								<input type="text"
+									ng-keypress="updateOnEnter($event, myProfileSettings.profile.interests, 'interest')"
+									ng-model="ctrl.interest" class="form-control tab-inputarea-style" id="exampleInput1"
+									placeholder="eg: Music" />
+								<p ng-if="myProfileSettings.profile.interests.length === 0 && updateProfilePropertiesNotFulfilled"
+									class="fadeOut" style="font-size: large; margin: 7px; color: #f8a454;">
+									Please press enter/return after typing each interest.
+								</p>
+								<p ng-if="myProfileSettings.profile.interests.length === 1" class="fadeOut"
+									style="font-size: large; margin: 7px; color: #07d326;">
+									You can add more than one if you'd like.
+								</p>
+							</div>
+							<div class="interests-wrap">
+								<div class="interests-chip" ng-repeat="interest in myProfileSettings.profile.interests">
+									{{interest}}<a
+										ng-click="removeItem(interest, myProfileSettings.profile.interests)"><i
+											class="fa fa-remove interestsIcon"></i></a>
+								</div>
+							</div>
+							<div class="form-group form-spacing">
+								<label for="exampleInputEmail1" class="tab-inputarea-txt-style">My Languages - Please
+									add a
+									language and press enter/return</label>
+								<input type="text"
+									ng-keypress="updateOnEnter($event, myProfileSettings.profile.languages, 'language')"
+									ng-model="ctrl.language" class="form-control tab-inputarea-style" id="exampleInput2"
+									placeholder="eg: French" />
+								<p ng-if="myProfileSettings.profile.languages.length === 0 && updateProfilePropertiesNotFulfilled"
+									class="fadeOut" style="font-size: large; margin: 7px; color: #f8a954;">
+									Please press enter/return after typing each language.
+								</p>
+								<p ng-if="myProfileSettings.profile.languages.length === 1" class="fadeOut"
+									style="font-size: large; margin: 7px; color: #07d326;">
+									You can add more than one if you'd like.
+								</p>
+							</div>
+							<div class="interests-wrap">
+								<div class="interests-chip" ng-repeat="language in myProfileSettings.profile.languages">
+									{{language}}<a
+										ng-click="removeItem(language, myProfileSettings.profile.languages)"><i
+											class="fa fa-remove interestsIcon"></i></a>
+								</div>
+							</div>
+							<p ng-if="profileUpdated" class="fadeOut"
+								style="margin: 7px; color: #07d326; font-size: x-large;">
+								Updated Successfully!
+							</p>
+							<p ng-if="getRidOfAlertMessage" class="fadeOut"
+								style="margin: 7px; color: #f8a954; font-size: x-large;">
+								Update Unsuccessful. Please fill in all fields.
+							</p>
+							<div class="hidden-xs">
+
+								<button type="button" ng-click="updateProfile()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									Save
+								</button>
+								<button type="button" ng-click="cancelUpdateProfile()"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">
+									CANCEL
+								</button>
+							</div>
+							<div class="text-center visible-xs">
+
+								<button type="button" ng-click="updateProfile()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									Save
+								</button>
+								<button type="button" ng-click="cancelUpdateProfile()"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">
+									CANCEL
+								</button>
+							</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="account"
+						ng-class="{active: myProfileSettings.activeTab == 'account'}">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation"
+								ng-class="{active: myProfileSettings.account.activeTab == 'general'}"
+								ng-click="myProfileSettings.account.activeTab = 'general'">
+								<a aria-controls="general" role="tab" data-toggle="tab">General</a>
+							</li>
+							<li role="presentation"
+								ng-class="{active: myProfileSettings.account.activeTab == 'location'}"
+								ng-click="myProfileSettings.account.activeTab = 'location'">
+								<a aria-controls="location" role="tab" data-toggle="tab">Location</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="general"
+								ng-class="{active: myProfileSettings.account.activeTab == 'general'}">
+								<form class="tab-sett-frm-pad">
+									<div class="col-md-12 col-sm-12 col-xs-12 padding-zero">
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-left-zero">
+											<div class="form-group">
+												<label class="tab-inputarea-txt-style" for="exampleInputName1">First
+													Name</label>
+												<input type="text" class="form-control tab-inputarea-style"
+													id="exampleInputName1" placeholder="First Name"
+													ng-model="myProfileSettings.account.general.fname" />
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-right-zero">
+											<div class="form-group">
+												<label class="tab-inputarea-txt-style" for="exampleInputName2">Last
+													Name</label>
+												<input type="text" class="form-control tab-inputarea-style"
+													id="exampleInputName2" placeholder="Last Name"
+													ng-model="myProfileSettings.account.general.lname" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 padding-zero">
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-left-zero">
+											<ui-select ng-model="myProfileSettings.account.general.gender"
+												theme="bootstrap">
+												<ui-select-match placeholder="Gender">{{$select.selected.name}}
+												</ui-select-match>
+												<ui-select-choices
+													repeat="item in util.gender | filter: $select.search">
+													<div ng-bind-html="item.name | highlight: $select.search"></div>
+												</ui-select-choices>
+											</ui-select>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-right-zero">
+											<div class="btn-group grp-width" role="group" aria-label="age">
+												<div class="btn-group signup-width-left" role="group">
+													<ui-select ng-model="myProfileSettings.account.general.mm"
+														theme="bootstrap">
+														<ui-select-match placeholder="MM">{{$select.selected.id}}
+														</ui-select-match>
+														<ui-select-choices
+															repeat="item in util.dob.mm | filter: $select.search">
+															<div ng-bind-html="item.name | highlight: $select.search">
+															</div>
+														</ui-select-choices>
+													</ui-select>
+												</div>
+												<div class="btn-group signup-width-mid" role="group">
+													<ui-select ng-model="myProfileSettings.account.general.dd"
+														theme="bootstrap">
+														<ui-select-match placeholder="DD">{{$select.selected}}
+														</ui-select-match>
+														<ui-select-choices
+															repeat="item in util.dob.dd | filter: $select.search">
+															<div ng-bind-html="item | highlight: $select.search"></div>
+														</ui-select-choices>
+													</ui-select>
+												</div>
+												<div class="btn-group signup-width-right" role="group">
+													<ui-select ng-model="myProfileSettings.account.general.yyyy"
+														theme="bootstrap">
+														<ui-select-match placeholder="YY">{{$select.selected}}
+														</ui-select-match>
+														<ui-select-choices
+															repeat="item in util.dob.yyyy | filter: $select.search">
+															<div ng-bind-html="item | highlight: $select.search"></div>
+														</ui-select-choices>
+													</ui-select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="tab-inputarea-txt-style" for="exampleInputEmail3">Email
+											address</label>
+										<input type="email" class="form-control tab-inputarea-style"
+											id="exampleInputEmail3" placeholder="Email"
+											ng-model="myProfileSettings.account.general.email" />
+									</div>
+									<div class="form-group">
+										<label class="tab-inputarea-txt-style"
+											for="exampleInputPassword3">Password</label>
+										<input type="password" class="form-control tab-inputarea-style"
+											id="exampleInputPassword3" placeholder="Password" />
+									</div>
+									<div class="form-group">
+										<label class="tab-inputarea-txt-style" for="exampleInputPassword3">Repeat
+											Password</label>
+										<input type="password" class="form-control tab-inputarea-style"
+											id="exampleInputPassword3" placeholder="Password" />
+									</div>
+									<div class="hidden-xs">
+										<button type="submit"
+											class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+											SAVE
+										</button>
+										<button type="submit"
+											class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+									</div>
+									<div class="text-center visible-xs">
+										<button type="submit"
+											class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+											SAVE
+										</button>
+										<button type="submit"
+											class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+									</div>
+								</form>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="location"
+								ng-class="{active: myProfileSettings.account.activeTab == 'location'}">
+								<form action="profile_setup_step_three.html">
+									<!-- Using microblog-map directive below only because -->
+									<!-- it was convenient to reuse the code, name is ambiguous -->
+									<div microblog-map style="width: 400px; height: 40%"></div>
+									<!-- <p style="font-size: 1.5em; text-align: center; margin-top: 20px">Search for an address</p> -->
+									<div id="geocoder" class="hidden"></div>
+									<!-- <button type="button" ng-click="completeStep2()"
+										class="btn btn-primary login-submit-btn">CONTINUE</button> -->
+									<!-- </form> -->
+									<!-- <form class="tab-sett-frm-pad"> -->
+									<!-- <div class="form-group">
+										<label class="tab-inputarea-txt-style" for="exampleInput11">Address line
+											1</label>
+										<input type="text" ng-model="myProfileSettings.account.location.addrs1"
+											class="form-control tab-inputarea-style" id="exampleInput11"
+											placeholder="" />
+									</div>
+									<div class="form-group">
+										<label class="tab-inputarea-txt-style" for="exampleInput22">Address line
+											2</label>
+										<input type="text" ng-model="myProfileSettings.account.location.addrs2"
+											class="form-control tab-inputarea-style" id="exampleInput12"
+											placeholder="" />
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 padding-zero">
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-left-zero">
+											<div class="btn-group grp-width">
+												<label class="tab-inputarea-txt-style"
+													for="exampleInput1">Country</label>
+												<ui-select ng-model="myProfileSettings.account.location.country"
+													theme="bootstrap">
+													<ui-select-match placeholder="Select Country">
+														{{$select.selected.name}}
+													</ui-select-match>
+													<ui-select-choices
+														repeat="item in util.countries | filter: $select.search">
+														<div ng-bind-html="item.name | highlight: $select.search"></div>
+													</ui-select-choices>
+												</ui-select>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-right-zero">
+											<div class="form-group">
+												<label class="tab-inputarea-txt-style"
+													for="exampleInput33">State</label>
+												<input type="text" ng-model="myProfileSettings.account.location.state"
+													class="form-control tab-inputarea-style" id="exampleInput11"
+													placeholder="" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 padding-zero">
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-left-zero">
+											<div class="form-group">
+												<label class="tab-inputarea-txt-style" for="exampleInput33">City</label>
+												<input type="text" ng-model="myProfileSettings.account.location.city"
+													class="form-control tab-inputarea-style" id="exampleInput11"
+													placeholder="" />
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 padding-zero padding-right-zero">
+											<div class="form-group">
+												<label class="tab-inputarea-txt-style" for="exampleInput33">Zip</label>
+												<input type="text" ng-model="myProfileSettings.account.location.zip"
+													class="form-control tab-inputarea-style" id="exampleInput11"
+													placeholder="" />
+											</div>
+										</div>
+									</div> -->
+									<p ng-if="locationUpdated" class="fadeOut"
+										style="margin: 7px; color: #07d326; font-size: x-large;">
+										Updated Successfully!
+									</p>
+									<div class="hidden-xs">
+										<button type="button" ng-click="updateAccountLocation()"
+											class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+											SAVE
+										</button>
+										<button type="button"
+											class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+									</div>
+									<div class="text-center visible-xs">
+										<button type="button" ng-click="updateAccountLocation()"
+											class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+											SAVE
+										</button>
+										<button type="button"
+											class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+									</div>
+								</form>
+							</div>
+						</div>
+						<!-- Tab panes -->
+					</div>
+					<div role="tabpanel" class="tab-pane" id="privacy"
+						ng-class="{active: myProfileSettings.activeTab == 'privacy'}">
+						<h3 class="tab-Head-Txts">Privacy</h3>
+						<form class="tabs-notify-checkbox-frm-pad">
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Only allow other members to see my
+									profile</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox"
+										ng-model="myProfileSettings.privacy.only_members_see_profile" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Share my recent events</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.privacy.share_recent_events" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Show my friends</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.privacy.show_my_friends" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Make my profile public</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.privacy.is_profile_public" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">New messages</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.privacy.new_messages" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+						</form>
+
+						<h3 class="tab-Head-Txts">Block List</h3>
+						<form class="tabs-notify-checkbox-frm-pad">
+							<div class="events-wrap-converse" ng-repeat="user in blockList">
+								<div class="col-md-1 col-sm-1 col-xs-1 colPadZero">
+									<img src="img/event-icon1.png" class="events-convers-img" />
+								</div>
+								<div class="col-md-9 col-sm-9 col-xs-7 colPadZero event-seperator-border">
+									<div class="event-heading-convers">
+										<span>{{user.fname}} {{user.lname}}</span>
+									</div>
+									<div class="event-sub-heading-convers">
+										<span>San Francisco, CA</span>
+									</div>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 colPadZero">
+									<button type="submit"
+										class="btn btn-primary chat-invite-purple-btn tabs-notify-sett-align-pad">
+										REMOVE
+									</button>
+								</div>
+							</div>
+							<div class="hidden-xs">
+								<button type="button" ng-click="updatePrivacy()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									SAVE
+								</button>
+								<button type="button"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+							</div>
+							<div class="text-center visible-xs">
+								<button type="button" ng-click="updatePrivacy()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									SAVE
+								</button>
+								<button type="button"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+							</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="notifications"
+						ng-class="{active: myProfileSettings.activeTab == 'notifications'}">
+						<h3 class="tab-Head-Txts">
+							Notifications
+							<!--Tati-s change: Lisa asked to remove this-->
+							<!--<span class="notify-check">Email</span>-->
+						</h3>
+						<form class="tabs-notify-checkbox-frm-pad">
+							<!--Tati's change: The divs pertaining to this form where all updated to use switch buttons instead of checkbox-->
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">New Messages</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.notifications.new_messages" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">New Events</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.notifications.new_events" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Friend Requests</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox" ng-model="myProfileSettings.notifications.friend_requests" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+
+							<div class="tabs-notify-check-styles">
+								<span class="tabs-notify-check-span-toggle">Invitations to Conversation</span>
+								<label class="switch tabs-notify-checkbox-align-toggle">
+									<input type="checkbox"
+										ng-model="myProfileSettings.notifications.invitations_to_conversation" />
+									<div class="slider round"></div>
+								</label>
+							</div>
+
+							<!--Tati's change-Lisa asked to delete this whole section-->
+							<!--<div class="tabs-notify-check-styles">-->
+							<!--<span class="tabs-notify-check-span">Mutual Likes</span>-->
+							<!--<div class="checkbox checkbox-primary tabs-notify-checkbox-align">-->
+							<!--<input type="checkbox" ng-model="myProfileSettings.notifications.mutual_likes" class="styled styled-primary" id="singleCheckbox5" value="option5" aria-label="Single checkbox Five">-->
+							<!--<label class="notifySett"></label>-->
+							<!--</div>-->
+							<!--</div>-->
+							<div class="hidden-xs">
+								<button type="button" ng-click="updateNotifications()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									SAVE
+								</button>
+								<button type="button"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+							</div>
+							<div class="text-center visible-xs">
+								<button type="button" ng-click="updateNotifications()"
+									class="btn btn-primary chat-invite-orange-btn margin-btn tab-sett-btn-pad">
+									SAVE
+								</button>
+								<button type="button"
+									class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1 col-sm-1 col-xs-12 text-center hidden-xs"></div>
+		</div>
+	</div>
+</section>

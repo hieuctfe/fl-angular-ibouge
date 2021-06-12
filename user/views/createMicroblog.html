@@ -1,0 +1,160 @@
+<style>
+
+    .ibg-btn {
+        border-radius: 5px;
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .ibg-btn.ibg-btn-create {
+        background-color: rgba(98, 71, 159, 1);
+        border-color: rgba(98, 71, 159, 1);
+        -webkit-box-shadow: 0 1px 5px #60626d;
+        box-shadow: 0 1px 5px #60626d;
+    }
+
+    .ibg-btn.ibg-btn-create hover {
+        background-color: rgba(98, 71, 159, 0.9);
+        border-color: rgba(98, 71, 159, 1);
+    }
+
+    .group-name {
+        font-size: 1.2em;
+        font-weight: lighter;
+    }
+    .existing-groups div {
+        text-align: left;
+    }
+
+    #topHeader {
+        height: 125px;
+        width: 100%;
+        background-color: #4e388d;
+        position: absolute;
+    }
+
+    #topHeaderInnerDivForPicture {
+        margin:auto;
+        margin-top: 15px;
+        width: 150px;
+        height: 150px;
+        z-index: 10;
+        position: relative;
+    }
+
+    #uploadPhoto {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        border: 1px solid #7662AB;
+        border-radius: 50%;
+        margin: auto;
+        display: block;
+        background-color: #FAFBFD
+    }
+
+    #setMicroBlogPic {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        top: 45px;
+        left: 155px;
+    }
+
+    #microBlogFormDiv {
+        position: absolute;
+        top: 155px;
+        margin-right: 5%;
+        margin-left: 5%;
+        width: 90%;
+        height: 75%;
+    }
+
+    #microBlogForm {
+        width: 100%;
+    }
+
+    #mapContainer {
+        position: absolute;
+        margin-left: 1%;
+        margin-right: 1%;
+        top: 135px;
+        height: 75%;
+        width: 98%;
+    }
+
+    #microblogMap {
+        width: 100%;
+        height: 50%;
+    }
+
+    #geocoder {
+        position: absolute;
+        width: 100%;
+        height: 50px;
+    }
+
+    .mapboxgl-ctrl-geocoder {
+        width: 100%;
+        height: 50px;
+        max-width: 100%;
+    }
+
+    .mapboxgl-ctrl-geocoder input[type=text] {
+        font-size: large;
+        margin-top: 5px;
+    }
+
+    .mapboxgl-ctrl-geocoder span.geocoder-icon-search {
+        top: 15px;
+        left: 15px;
+    }
+
+    .mapboxgl-ctrl-geocoder ul {
+        font-size: large;
+    }
+
+
+</style>
+<div class="modal-content">
+    <div style="height: 100%; width: 100%">
+        <div id="topHeader">
+            <div id="topHeaderInnerDivForPicture">
+                <img id="uploadPhoto" src="{{ctrl.microblogImg}}"/>
+                <img id="setMicroBlogPic" ng-click="setMicroblogPic()" src="img/upload-photo-icon.png"/>
+            </div>
+        </div>
+        <div id="microBlogFormDiv">
+            <form id="microBlogForm">
+                <div class="form-group" style="padding: 10px; font-size: 1.5em">
+                    <label class="group-name" id="microblogName">Microblog Name</label>
+                    <input type="text" style="width: 100%; height: 50px; font-size: large" class="form-control" ng-model="ctrl.microblogName" id="inputBox">
+                    <span us-spinner spinner-key="spinner-4"></span>
+                </div>
+                <div id="mapContainer">
+                    <p style="font-size: 1.5em; text-align: center; margin-bottom: 20px">Add location: Click on map</p>
+                    <div id="microblogMap" microblog-map></div>
+                    <p style="font-size: 1.5em; text-align: center; margin-top: 20px">Search for an address</p>
+                    <div id="geocoder" style="width: 100%; position: relative">
+                        <div style="width: 50%; position: absolute; margin-top: 70px; margin-left: 25%; margin-right: 25%">
+                            <button class="btn btn-primary ibg-btn ibg-btn-create" style="width: 40%; margin-left: 30%; margin-right: 30%" ng-click="createMicroblog()">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

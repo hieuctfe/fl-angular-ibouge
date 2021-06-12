@@ -1,0 +1,450 @@
+<style>
+	.groupchat-model-back-drop.back-drop {
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		background: rgba(97, 72, 161, 0.32);
+		display: flex;
+		z-index: 2000;
+		max-height: calc(100vh);
+		overflow: auto;
+	}
+
+	.groupchat-model-wpr {
+		margin: auto;
+		/*padding: 20px;*/
+		background: white;
+		width: 595px;
+		height: 694px;
+		border-radius: 8px;
+		position: absolute;
+		top: 90px;
+		left: 35%;
+	}
+
+	.groupchat-model-wpr-sm {
+		margin: auto;
+		/*padding: 20px;*/
+		background: white;
+		width: 90%;
+		height: 90%;
+		border-radius: 8px;
+		position: absolute;
+		top: 5%;
+		left: 5%;
+	}
+
+	.friendsImg {
+		height: 370px;
+		width: 55px;
+		padding: 2px;
+		background: transparent;
+		position: absolute;
+		top: 90px;
+		left: 30%;
+	}
+
+	.ibg-btn {
+		border-radius: 5px;
+		-webkit-transition-duration: 0.5s;
+		transition-duration: 0.5s;
+		cursor: pointer;
+		padding: 10px 20px;
+		font-size: 13px;
+	}
+
+	.ibg-btn.ibg-btn-create {
+		background-color: rgba(98, 71, 159, 1);
+		border-color: rgba(98, 71, 159, 1);
+		-webkit-box-shadow: 0 1px 5px #60626d;
+		box-shadow: 0 1px 5px #60626d;
+	}
+
+	.ibg-btn.ibg-btn-create: hover {
+		background-color: rgba(98, 71, 159, 0.9);
+		border-color: rgba(98, 71, 159, 1);
+	}
+
+	/*.ibg-model-close {*/
+	/*position: absolute;*/
+	/*right: 0;*/
+	/*top: 0;*/
+	/*padding: 10px;*/
+	/*}*/
+
+	.existing-groups div {
+		text-align: left;
+	}
+
+	.invite-button-orange {
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+		background: -webkit-linear-gradient(left, #fa834b 0%, #fab04b 100%);
+		border: #fa834b;
+		color: #FFFFFF;
+		font-size: 11px;
+	}
+
+	.inputfile {
+		width: 0;
+		height: 0;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+		cursor: pointer;
+	}
+
+	.send-image-button:focus,
+	:active {
+		outline: none;
+	}
+
+	.send-image-button:focus {
+		outline: none;
+	}
+
+	.group-chat-reply-txt .emoji-picker-icon {
+		top: 15px;
+		right: -130%;
+	}
+</style>
+
+<div class="back-drop groupchat-model-back-drop hidden-xs" ng-if="ctrl.show">
+	<div class="friendsImg" style="overflow-y: auto">
+		<div style="padding-top: 10px; width:50px; height: 60px" ng-repeat="user in friends track by $index">
+			<img ng-src="{{US.getProfilePic(user.profile_pic)}}" style="width: 45px; height: 45px; border-radius: 50%;">
+		</div>
+	</div>
+
+	<!--This is a button that shows how many more users are in the group-chat only when there is more than 6 users-->
+	<div ng-if="friends.length > 6" class="friendsImg" style="top: 450px;padding-top: 10px; width:50px; height: 60px">
+		<button class="invite-button-orange">{{moreGroupChatUsers}}+</button>
+	</div>
+
+	<div class="groupchat-model-wpr">
+		<div class="ibg-model-close">
+			<span us-spinner spinner-key="spinner-3"></span>
+			<div ng-repeat="chat in chats" style="height: 660px">
+				<div class="popover-topnav-head" style="width: 595px;">
+					<div class="pop-purple-head">
+						<span style="text-align: left">{{chat | ChatNameFilter}}</span>
+						<i class="fa fa-close" aria-hidden="true" style="cursor: pointer; float: right; padding: 7px;"
+							ng-click="closeChat(chat)"></i>
+						<!--<i ng-if="!chat.isGroupChat" class="fa fa-circle float-pop-{{chat.friends.is_online ? 'online' : 'idle'}}" aria-hidden="true"></i>-->
+						<div class="dropdown float-pop-morebtn" style="text-align: right;">
+							<!--<button style="padding: 0; border: none"><img src="../assets/img/icons8-Bookmark%20Ribbon%20Filled-50.png" class="chat-bookmark-fill"></button>-->
+							<!--<button style="padding: 0; border: none"><img src="../assets/img/icons8-Add%20User%20Male-48%20(1).png" class="add-user-to-chat"></button>-->
+
+							<!--
+                        <button class="btn btn-default dropdown-toggle float-btn-wrap" type="button" id="dropdownMenu1" data-toggle="dropdown" data-placement="right" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        </button>
+                        -->
+							<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="popover-topnav-subheading">
+					<div ibg-scroller="{{chat.room}}" class="chat-wrap-pop"
+						style="float: left; height: 570px; overflow: auto;">
+						<div ng-repeat="message in chat.messages">
+							<div class="dayOfChat" style="width: 100%; text-align: center"
+								ng-if="message.isFirstMessage && message.in || message.in  && message.isNewDay">
+								{{message.time | date: "EEEE h:mm"}}
+							</div>
+							<div class="chat-bubble-wrap" ng-if="message.in && !message.isImage">
+								<div
+									style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);"><span
+										class="chat-in-time" ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+								</div>
+								<!--<span class="arrow-left-group-chat"></span>-->
+								<div class="chatBubble">{{message.msg}}</div>
+							</div>
+							<div class="dayOfChat" style="width: 100%; text-align: center"
+								ng-if="message.isFirstMessage && !message.in || !message.in  && message.isNewDay">
+								{{message.time | date: "EEEE h:mm"}}
+							</div>
+							<div class="chat-bubble-wrap" ng-if="!message.in && !message.isImage">
+								<div
+									style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-if="chat.isGroupChat" ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<div class="chat-sent-time" ng-if="!message.in">{{message.time | date: 'h:mm'}}
+									</div>
+								</div>
+								<div class="arrow-right-group-chat"></div>
+								<div class="chat-sent-bubble" style="max-width: 76%">{{message.msg}}</div>
+							</div>
+							<!--This is an outgoing picture message-->
+							<div class="chat-bubble-wrap" ng-if="message.isImage && !message.in">
+								<div
+									style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<div style="padding-bottom: 30px;" class="chat-sent-time" ng-if="!message.in">
+										{{message.time | date: 'h:mm'}}</div>
+								</div>
+								<div class="arrow-right-group-chat"></div>
+								<div class="chat-sent-bubble" style="max-width: 76%; padding: 3px">
+									<div><img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+											style="max-width: 400px; max-height: 400px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+									</div>
+								</div>
+
+							</div>
+
+							<!--This is an incoming picture message-->
+							<div class="chat-bubble-wrap" ng-if="message.isImage && message.in">
+								<div
+									style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<span style="padding-bottom: 30px;" class="chat-in-time"
+										ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+								</div>
+								<!--<span class="arrow-left-group-chat"></span>-->
+								<div class="chatBubble" style="padding: 0">
+									<div>
+										<img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+											style="max-width: 400px; max-height: 400px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="chat-reply-area" style="width: 300px;">
+						<div class="col-md-12 col-sm-12 col-12 colPadZero">
+							<div class="col-md-10 col-sm-10 col-10 colPadZero">
+								<div class="chat-reply-txt group-chat-reply-txt"
+									style="width: 594px;border-radius: 8px;">
+									<input type="file" name="group-chat-message-file" id="{{chat.room}}"
+										class="inputfile" ibg-image-file-reader>
+									<label for="{{chat.room}}" class="btn btn-warning btn-flat send-image-button"
+										style="color: #fff; background-color: #5f45a1;border-color: #5f45a1;margin-right: 9px;">
+										<label for="{{chat.room}}"
+											style="cursor: pointer; height: 100%; width: 100%; "><i
+												class="glyphicon glyphicon-paperclip"></i></label>
+									</label>
+									<input type="hidden" name="status" id="hidden-group-chat-{{chat.room}}">
+									<input emoji-picker="emoji-picker" type="text"
+										ng-keyup="sendMsgOnEnter($event, chat.chatMessage, chat)"
+										ng-model="chat.chatMessage" class="chat-reply-form"
+										placeholder="Type something to send..." id="group-chat-{{chat.room}}">
+								</div>
+							</div>
+							<!--<div class="col-md-2 col-sm-2 col-2 colPadZero" style="width: 80px">-->
+							<!--<button type="button" ng-click="sendMessage(chat.chatMessage, chat)" class="btn btn-primary chat-pop-send-btn margin-btn"><i class="fa fa-paper-plane" style="line-height: inherit;" aria-hidden="true"></i></button>-->
+							<!--</div>-->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="back-drop groupchat-model-back-drop visible-xs" ng-if="ctrl.show">
+	<!-- <div class="friendsImg" style="overflow-y: auto">
+		<div style="padding-top: 10px; width:50px; height: 60px" ng-repeat="user in friends track by $index">
+			<img ng-src="{{US.getProfilePic(user.profile_pic)}}" style="width: 45px; height: 45px; border-radius: 50%;">
+		</div>
+	</div> -->
+
+	<!--This is a button that shows how many more users are in the group-chat only when there is more than 6 users-->
+	<!-- <div ng-if="friends.length > 6" class="friendsImg" style="top: 450px;padding-top: 10px; width:50px; height: 60px">
+		<button class="invite-button-orange">{{moreGroupChatUsers}}+</button>
+	</div> -->
+
+	<div class="groupchat-model-wpr-sm">
+		<div class="ibg-model-close">
+			<span us-spinner spinner-key="spinner-3"></span>
+			<div ng-repeat="chat in chats">
+				<div class="popover-topnav-head">
+					<div class="pop-purple-head">
+						<span style="text-align: left">{{chat | ChatNameFilter}}</span>
+						<i class="fa fa-close" aria-hidden="true" style="cursor: pointer; float: right; padding: 7px;"
+							ng-click="closeChat(chat)"></i>
+						<!--<i ng-if="!chat.isGroupChat" class="fa fa-circle float-pop-{{chat.friends.is_online ? 'online' : 'idle'}}" aria-hidden="true"></i>-->
+						<div class="dropdown float-pop-morebtn" style="text-align: right;">
+							<!--<button style="padding: 0; border: none"><img src="../assets/img/icons8-Bookmark%20Ribbon%20Filled-50.png" class="chat-bookmark-fill"></button>-->
+							<!--<button style="padding: 0; border: none"><img src="../assets/img/icons8-Add%20User%20Male-48%20(1).png" class="add-user-to-chat"></button>-->
+
+							<!--
+                        <button class="btn btn-default dropdown-toggle float-btn-wrap" type="button" id="dropdownMenu1" data-toggle="dropdown" data-placement="right" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        </button>
+                        -->
+							<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="popover-topnav-subheading">
+					<div ibg-scroller="{{chat.room}}" class="chat-wrap-pop" style="float: left; overflow: auto;">
+						<div ng-repeat="message in chat.messages">
+							<div class="dayOfChat" style="width: 100%; text-align: center"
+								ng-if="message.isFirstMessage && message.in || message.in  && message.isNewDay">
+								{{message.time | date: "EEEE h:mm"}}
+							</div>
+							<div class="chat-bubble-wrap" ng-if="message.in && !message.isImage">
+								<div
+									style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);"><span
+										class="chat-in-time" ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+								</div>
+								<!--<span class="arrow-left-group-chat"></span>-->
+								<div class="chatBubble">{{message.msg}}</div>
+							</div>
+							<div class="dayOfChat" style="width: 100%; text-align: center"
+								ng-if="message.isFirstMessage && !message.in || !message.in  && message.isNewDay">
+								{{message.time | date: "EEEE h:mm"}}
+							</div>
+							<div class="chat-bubble-wrap" ng-if="!message.in && !message.isImage">
+								<div
+									style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-if="chat.isGroupChat" ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<div class="chat-sent-time" ng-if="!message.in">{{message.time | date: 'h:mm'}}
+									</div>
+								</div>
+								<div class="arrow-right-group-chat"></div>
+								<div class="chat-sent-bubble" style="max-width: 76%">{{message.msg}}</div>
+							</div>
+							<!--This is an outgoing picture message-->
+							<div class="chat-bubble-wrap" ng-if="message.isImage && !message.in">
+								<div
+									style="position: absolute; right: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: right; border-radius: 50%; margin-top: 4px; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<div style="padding-bottom: 30px;" class="chat-sent-time" ng-if="!message.in">
+										{{message.time | date: 'h:mm'}}</div>
+								</div>
+								<div class="arrow-right-group-chat"></div>
+								<div class="chat-sent-bubble" style="max-width: 76%; padding: 3px">
+									<div><img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+											style="width: 107px; height: 88px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+									</div>
+								</div>
+
+							</div>
+
+							<!--This is an incoming picture message-->
+							<div class="chat-bubble-wrap" ng-if="message.isImage && message.in">
+								<div
+									style="position: absolute; left: 0;width: 8%; min-height: 10%; padding-bottom: 10px">
+									<img ng-init="message.widthStyle={'max-width':'82%'}"
+										ng-src="{{getFromImage(message.from, chat)}}"
+										style="width: 40px; height: 40px; float: left; border-radius: 50%; border: 4px solid rgba(97, 72, 161, 0.32);">
+									<span style="padding-bottom: 30px;" class="chat-in-time"
+										ng-if="message.in">{{message.time | date: 'h:mm'}}</span>
+
+								</div>
+								<!--<span class="arrow-left-group-chat"></span>-->
+								<div class="chatBubble" style="padding: 0">
+									<div>
+										<img ng-init="message.widthStyle={'max-width':'82%'}" src="{{message.msg}}"
+											style="width: 107px; height: 88px; float: right; margin-top: 4px;padding: 5px; border-radius: 7%">
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="chat-reply-area">
+						<div class="col-md-12 col-sm-12 col-12 colPadZero">
+							<div class="col-md-10 col-sm-10 col-10 colPadZero">
+								<div class="chat-reply-txt group-chat-reply-txt" style="border-radius: 8px;">
+									<input type="file" name="group-chat-message-file" id="{{chat.room}}"
+										class="inputfile" ibg-image-file-reader>
+									<label for="{{chat.room}}" class="btn btn-warning btn-flat send-image-button"
+										style="color: #fff; background-color: #5f45a1;border-color: #5f45a1;margin-right: 9px;">
+										<label for="{{chat.room}}"
+											style="cursor: pointer; height: 100%; width: 100%; "><i
+												class="glyphicon glyphicon-paperclip"></i></label>
+									</label>
+									<input type="hidden" name="status" id="hidden-group-chat-{{chat.room}}">
+									<input emoji-picker="emoji-picker" type="text"
+										ng-keyup="sendMsgOnEnter($event, chat.chatMessage, chat)"
+										ng-model="chat.chatMessage" class="chat-reply-form"
+										placeholder="Type something to send..." id="group-chat-{{chat.room}}">
+								</div>
+							</div>
+							<!-- <div class="col-md-2 col-sm-2 col-2 colPadZero" style="width: 80px">
+								<button type="button" ng-click="sendMessage(chat.chatMessage, chat)"
+									class="btn btn-primary chat-pop-send-btn margin-btn"><i class="fa fa-paper-plane"
+										style="line-height: inherit;" aria-hidden="true"></i></button>
+							</div> -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--This is the code that was originally here-->
+
+<!--<div ng-if="ctrl.show" class="back-drop groupchat-model-back-drop">-->
+<!--<div class="groupchat-model-wpr">-->
+<!--<div class="ibg-model-close">-->
+<!--<i style="cursor: pointer;" class="fa fa-close" ng-click="closeWindow()"></i>-->
+<!--</div>-->
+<!--<div>-->
+<!--<form>-->
+<!--<div class="form-group">-->
+<!--<label class="tab-inputarea-txt-style" for="new-group-name">Group Name</label>-->
+<!--<input type="text" style="width: 100%;" class="form-control" ng-model="ctrl.groupChatName">-->
+<!--</div>-->
+<!--<div><button class="btn btn-primary ibg-btn ibg-btn-create" ng-click="createGroupChat()">Create</button></div>-->
+<!--</form>-->
+<!--<div ng-show="groups.length > 0">-->
+<!--<div>OR</div>-->
+<!--<div>Add to existing group chat</div>-->
+<!--<div class="existing-groups">-->
+<!--<div ng-repeat="group in groups" style="display: flex; margin-top: 15px;">-->
+<!--<input type="checkbox">-->
+<!--<img style="width: 50px; height: 50px; border-radius: 50%; margin: 0 10px;">-->
+<!--<div>-->
+<!--<div>{{group.name}}</div>-->
+<!--<div>Users : {{group.users.length}} Created on: {{group.created_date | date:'MMM dd, yyyy'}}</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div><button class="btn btn-primary ibg-btn ibg-btn-create">Add</button></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

@@ -1,0 +1,12 @@
+<div id="popover{{myFriend._id}}" role="tooltip" style="display: block; top: calc(-100% - 10px); left: -50%;" on-close="closePopover(id)" >
+    <div class="arrow" style="left: 50%;"></div>
+    <div class="popover-content">
+        <div class="popover-heading-frnds">
+            <span>{{util.getPrintableLocation(myFriend)}}</span>
+        </div>
+        <div class="popover-sub-heading-frnds">
+            <span>{{getInterestStr(myFriend.profile.interests)}}</span>
+        </div>
+        <button style="width: 160px; display: flex;" type="button" class="btn btn-primary chat-invite-orange-border" ng-click="myFriend.selected = true">INVITE TO CHAT</button>
+    </div>
+</div>

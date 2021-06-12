@@ -1,0 +1,395 @@
+<style>
+	.status-update-box-heading {
+		padding: 16px;
+		font-size: 1.5em;
+		text-align: left;
+		box-shadow: 0px 5px 5px -5px #b5b5b5;
+		margin-bottom: 0px;
+	}
+
+	.upload-pic-status-button:focus {
+		outline: none;
+	}
+
+	input.status-message:focus {
+		border-color: #dadce8;
+		outline: none;
+		-webkit-box-shadow: none;
+		box-shadow: unset;
+	}
+
+	status-message::placeholder {
+		align-self: center;
+	}
+
+	.status-updates-wrap-converse {
+		color: #474d59;
+		background: transparent;
+		font-size: 1.1em;
+		padding: 10px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		word-wrap: break-word;
+		width: 100%;
+		border: none;
+		border-top: 1px solid #f0f3f7;
+		text-align: left;
+	}
+
+	.status-updates-wrap-converse:first-child {
+		border: none;
+		border-top: 1px solid #f0f3f7;
+		border-bottom: 1px solid #f0f3f7;
+	}
+
+	.status-updates-wrap-converse:last-child {
+		border: none;
+		border-top: 1px solid #f0f3f7;
+		border-bottom: 1px solid #f0f3f7;
+	}
+
+	.status-update-like {
+		font-size: 0.8em;
+		text-align: right;
+		float: right;
+		color: #ccd0d9;
+		text-decoration: none;
+		vertical-align: middle;
+		padding: 0 7px
+	}
+
+	.status-update-like:hover {
+		color: #ff6e8d;
+		text-decoration: none;
+		outline: none;
+	}
+
+	.status-update-like i {
+		font-size: 2em;
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	.status-update-like span {
+		font-size: 1.4em;
+		vertical-align: middle;
+		text-align: center;
+		color: #ff6e8d;
+		padding: 0 3px 0 7px;
+	}
+
+	a.status-update-like:focus {
+		outline: 0;
+		text-decoration: none
+	}
+
+	.status-update-box-liked {
+		color: #ff6e8d;
+		text-decoration: none;
+		outline: none;
+	}
+
+	.emoji-picker-icon {
+		font-size: 20px;
+		/*right: 86px;*/
+		top: 17px;
+	}
+
+	.inputfile {
+		width: 10%;
+		height: 100%;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+		cursor: pointer;
+	}
+</style>
+<section>
+	<div>
+		<section class="content-area">
+			<div class="container containerWidth">
+				<!--Beginning of row-->
+				<div class="row user-prof-name-pad">
+					<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+					<!--Beginning of status updates-->
+					<div class="col-md-5 col-sm-5 col-12">
+						<div class="user-event-box" style="height: 916px;">
+							<div>
+								<h4 class="status-update-box-heading" style="box-shadow: none;">Status Updates
+									<a href="" class="event-box-heading-add-event btnd"
+										ng-click="showOnlyFriendsUpdates();"
+										ng-style="{color: friendsStatusesOnlyShown === true ? '#6148a1' : '#ffb940'}">FRIENDS</a>
+									<a href="" style="margin-right: 25px" class="event-box-heading-add-event btnd"
+										ng-click="showOnlyUsersInMapUpdates();"
+										ng-style="{color: mapStatusesOnlyShown === true ? '#6148a1' : '#ffb940'}">EVERYONE</a>
+								</h4>
+								<div style="padding: 10px 10px 0px 10px">
+									<p class="emoji-picker-container" style="text-align: center;">
+										<input type="file" name="file" id="file" class="inputfile" ibg-image-file-reader
+											caption="status.message.message">
+										<button class="upload-pic-status-button"
+											style="width: 10%; height: 6%; float: left; border-radius: 5px; text-align: center; border: 2px solid #dadce8; font-size: 1.8em; background-color: white; padding: 0;">
+											<label for="file" style="cursor: pointer; height: 100%; width: 100%; "><i
+													style="margin-top: 11px" class="fa fa-paperclip"></i></label>
+										</button>
+										<input emoji-picker="emoji-picker" emoji-attachment-location="top left"
+											emoji-menu-location="bottom right" type="text"
+											class="form-control status-message" placeholder="What's on your mind?"
+											ng-model="status.message.message"
+											style="width: 90%; height: 6%; border-radius: 5px; text-align: left; border: 2px solid #dadce8; font-size: 1.8em; resize: none;"
+											ng-keypress="newStatus($event, status.message.message)">
+									</p>
+								</div>
+							</div>
+							<div style="height: 84%; width: 100%; overflow-y: auto">
+								<div class="status-updates-wrap-converse" ng-repeat="status in allStatusUpdates">
+									<div class="col-md-12 col-sm-12 col-12 colPadZero">
+										<div class="col-md-2 col-sm-2 col-2 colPadZero">
+											<img ng-src="{{status.profilePic}}" class="events-convers-img" />
+										</div>
+										<div class="col-md-7 col-sm-7 col-7 colPadZero">
+											<div class="event-heading-style" style="padding: 10px 0 0 0">
+												<span>{{status.userFullname}}</span>
+											</div>
+											<div class="event-sub-heading-style"
+												style="text-transform: none; padding: 0">
+												<span style="font-size: 15px">{{status.time | date: 'MMMM dd'}} at
+													{{ status.time | date: 'shortTime'}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 col-sm-12 col-12 colPadZero">
+										<div class="event-heading-convers"
+											style="font-size: 1.6em; padding: 25px; text-align: center; white-space: normal"
+											ng-hide="status.status_type == 'image'">
+											<p ng-bind-html="status.message | linky:'_blank'"></p>
+										</div>
+										<a href="{{status.message}}" data-lightbox="{{status.message}}">
+											<div ng-if="status.caption != ''" class="event-heading-convers"
+												style="font-size: 1.6em; padding: 25px; text-align: center; white-space: normal"
+												ng-hide="status.status_type == 'text'">
+												<p ng-bind-html="status.caption | linky:'_blank'"></p>
+											</div>
+											<img ng-if="status.status_type == 'image'" src="{{status.message}}"
+												style="width: 100%; margin-top: 4px; padding: 5px;">
+										</a>
+									</div>
+									<div class="col-md-12 col-sm-12 col-12 colPadZero">
+										<div class="event-sub-heading-style">
+											<a href="" class="status-update-like">
+												<i ng-class="{'status-update-box-liked' : status.likes.length > 0}"
+													class="fa fa-heart" aria-hidden="true"
+													ng-click="addLikeToStatus(status);">
+												</i>
+												<span ng-if="status.likes.length > 0">{{status.likes.length}}</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--End of status updates-->
+
+					<!--Column seperator-->
+					<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+
+					<!--Beginning of column-->
+					<div class="col-md-4 col-sm-4 col-12">
+						<!--Beginning of map-->
+						<div class="user-event-map-box">
+							<h4 class="event-box-heading event-map-box-padding-style">
+								<div class="dropdown event-map-box-dropdown-style">
+									<button
+										class="btn btn-default dropdown-toggle search-form-prof-btn btn-map-area-color"
+										type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="true">
+										{{citiesToFollow[0]}}<span class="caret caret-margin"></span>
+									</button>
+									<ul class="dropdown-menu" style="text-align: center; font-size: large"
+										aria-labelledby="dropdownMenu1">
+										<li style="cursor: pointer" ng-click="switchCity(citiesToFollow[1])">
+											{{citiesToFollow[1]}}</li>
+										<li style="cursor: pointer" ng-click="switchCity(citiesToFollow[2])">
+											{{citiesToFollow[2]}}</li>
+									</ul>
+								</div>
+								<a class="event-box-heading-add-event" ng-click="addNewLocationToFollow()"
+									style="cursor: pointer">
+									<i aria-hidden="true"></i>EDIT
+								</a>
+							</h4>
+							<div id="chartEventViewMap"></div>
+						</div>
+						<!--End of map-->
+
+						<!--Beginning of activities and events-->
+						<div style="height: 300px" class="user-event-box">
+							<div>
+								<h4 class="event-box-heading">Local activities and events
+									<a href="" class="event-box-heading-add-event" ng-click="goToCreateEventPage();">
+										<i class="fa fa-plus" aria-hidden="true"></i> ADD NEW
+									</a>
+								</h4>
+							</div>
+							<div style="height: 80%; overflow-y: auto;">
+								<div class="events-wrap-view" ng-repeat="event in myEvents">
+									<div class="col-md-2 col-sm-2 col-2 colPadZero">
+										<img style="height: 70px;width: 70px;" src="{{event.eventImage}}"
+											class="events-more-img">
+									</div>
+									<div class="col-md-7 col-sm-7 col-7 colPadZero" style="cursor: pointer"
+										ng-click="viewEvent(event);">
+										<div class="event-heading-style">
+											<span>{{event.name}}</span>
+										</div>
+										<div class="event-sub-heading-style">
+											<span>{{event.dateOfEvent | date: 'mediumDate'}} at
+												{{event.eventStartTime | date: 'shortTime'}}</span>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-2 col-2 colPadZero event-seperator-border">
+										<div class="event-heading-style">
+											<span class="event-going">{{event.status}}</span>
+										</div>
+										<div class="event-sub-heading-style">
+											<a href="" class="event-box-like-event">
+												<i ng-class="{'event-box-liked' : event.likes.length > 0}"
+													class="fa fa-heart" aria-hidden="true"
+													ng-click="addLike(event);"></i>
+												<span ng-if="event.likes.length > 0">{{event.likes.length}}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col-md-1 col-sm-1 col-1 colPadZero" style="cursor: pointer"
+										ng-click="viewEvent(event);">
+										<a class="event-box-arrow-view-event"><i class="fa fa-chevron-right"
+												aria-hidden="true"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--End of activities and events-->
+
+						<!--Beginning of microblogs-->
+						<div class="user-event-box" style="height: 300px;">
+							<div style="height: 18%">
+								<h4 class="event-box-heading">My Microblogs
+									<a href="" class="event-box-heading-add-event btnd"
+										ng-click="createNewMicroblog();">
+										<i class="fa fa-plus" aria-hidden="true"></i> ADD NEW
+									</a>
+								</h4>
+							</div>
+							<div style="height: 80%; width: 100%; overflow-y: auto">
+								<div class="events-wrap-converse" style="cursor: pointer"
+									ng-repeat="myMicroblog in myMicroblogs"
+									ng-click="openMicroblogFromList(myMicroblog)">
+									<div class="col-md-2 col-sm-2 col-2 colPadZero">
+										<img ng-src="{{getMicroblogPic(myMicroblog.microblogImage)}}"
+											class="events-convers-img" />
+									</div>
+									<div class="col-md-9 col-sm-9 col-9 colPadZero">
+										<div class="event-heading-convers">
+											<span>{{myMicroblog.name}}</span>
+										</div>
+										<div class="event-sub-heading-convers">
+											<span>on {{myMicroblog.created_date | date: 'shortDate'}}</span>
+										</div>
+									</div>
+									<div class="col-md-1 col-sm-1 col-1 colPadZero my-microblog-seperator-border">
+										<a href="" class="event-box-arrow-view-event"><i class="fa fa-chevron-right"
+												aria-hidden="true"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--End of microblogs-->
+					</div>
+					<!--End of column-->
+
+					<!--Column seperator-->
+					<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+					<!--End of row	-->
+				</div>
+
+				<!--Beginning of row-->
+				<div class="row user-prof-name-pad">
+					<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+					<div class="col-md-10 col-sm-10 col-12">
+						<!--Beginning of My Friends-->
+						<div class="user-event-box">
+							<h4 class="event-frnds-heading">My Friends<span
+									class="abt-me-frnds-grey">&#40;{{myFriends.total}}&#41;</span>
+							</h4>
+							<div class="events-wrap-frnds" style="display: inline-flex; overflow-x: auto">
+								<div class="col-md-2 col-sm-2 col-2" ng-repeat="myFriend in myFriends.friends">
+									<div class="frnds-photo-inner">
+										<div class="frnds-face-photo-div">
+											<!-- popover html was here, now it is in own html file -->
+											<!-- /popover -->
+											<img ng-src="{{US.getProfilePic(myFriend.profile_pic)}}"
+												class="frnds-face-photo-img"
+												uib-popover-template="'../myFriendPopup.html'" popover-hoverable="true"
+												friendId="{{myFriend._id}}" popover-is-open="popoverOpened1.$open"
+												popover-append-to-body="true" />
+										</div>
+										<div class="frnds-status-info-div frnds-status-align">
+											<img ng-if="myFriend.is_online" src="img/contact-online.png"
+												class="frnds-status-img" />
+											<img ng-if="!myFriend.is_online" src="img/contact-idle.png"
+												class="frnds-status-img" />
+										</div>
+									</div>
+									<h4 class="frnds-name">{{myFriend.fname}} {{myFriend.lname}}</h4>
+								</div>
+							</div>
+						</div>
+						<!--End of My Friends-->
+					</div>
+					<div class="col-md-1 col-sm-1 col-12 text-center d-block d-sm-none"></div>
+				</div>
+				<!--End of row-->
+			</div>
+		</section>
+
+		<!--Beginning of friend selection for chat-->
+		<div class="chat-btm-select-contacts">
+			<div class="col-md-12 col-sm-12 col-12 padding-even">
+				<div class="frnds-selected-div ibg-overlay-container" style="position: relative;"
+					ng-repeat="myFriend in myFriends.friends | filter:{selected: true} as selectedFriends">
+					<img ng-src="{{US.getProfilePic(myFriend.profile_pic)}}"
+						class="frnds-selected-img ibg-overlay-item" />
+					<div class="ibg-overlay">
+						<span style="font-size: 20px; cursor: pointer;" ng-click="myFriend.selected = false;"><i
+								class="fa fa-close"></i></span>
+					</div>
+				</div>
+				<span class="frnds-select-count">{{selectedFriends.length}} Friends Selected</span>
+				<div class="btn-submit-position">
+					<button type="button" class="btn btn-primary chat-invite-purple-btn margin-btn">CANCEL</button>
+					<button type="button" class="btn btn-primary chat-invite-orange-btn margin-btn"
+						ng-click="startConversation(selectedFriends)">START CONVERSATION</button>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<div class="container containerWidth">
+				<div class="row">
+					<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+					<div class="col-md-4 col-sm-4 col-12 text-center">
+						<a href="">About</a>
+						<a href="">Team</a>
+						<a href="">Contact</a>
+						<a href="">Mission</a>
+						<a href="">Technology</a>
+					</div>
+					<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+</section>

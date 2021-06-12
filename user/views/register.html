@@ -1,0 +1,110 @@
+<section class="content-area">
+	<div class="container containerWidth">
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-12 text-center d-block d-sm-none"></div>
+			<div class="col-md-4 col-sm-4 col-12 text-center">
+				<img src="img/ibouge-logo.png" class="login-logo" />
+				<h4 class="login-greeting">Sign up in a few simple steps</h4>
+				<div class="login-box">
+					<span class="login-success-msg" ng-if="successMessage">{{successMessage}}<a href="" class=""><span
+								ng-click="resendEmail()">Resend</span></a> link.</span>
+					<span class="login-error-msg" ng-if="errorMessage && resend">{{errorMessage}} <a href=""
+							class=""><span ng-click="resendEmail()">Resend</span></a> email.</span>
+					<span class="login-error-msg" ng-if="errorMessage && resend === false">{{errorMessage}}</span>
+					<div class="btn-group grp-width" role="group" aria-label="social media icons">
+						<button onclick="window.location.href='/auth/facebook'" type="button"
+							class="btn btn-default login-sm-fb"><i class="fa fa-facebook"
+								aria-hidden="true"></i>FACEBOOK</button>
+						<button onclick="window.location.href='/auth/google'" type="button"
+							class="btn btn-default login-sm-g"><i class="fa fa-google"
+								aria-hidden="true"></i>GOOGLE</button>
+						<button onclick="window.location.href='/auth/twitter'" type="button"
+							class="btn btn-default login-sm-tw"><i class="fa fa-twitter"
+								aria-hidden="true"></i>TWITTER</button>
+					</div>
+					<span class="login-seperator-txt">Or</span>
+					<form name="registerForm" novalidate ng-submit="register(registerForm.$valid)">
+						<div class="col-md-12 col-sm-12 col-12 padding-zero">
+							<div class="col-md-6 col-sm-6 col-12 padding-zero padding-left-zero">
+								<div class="form-group">
+									<label class="sr-only" for="exampleInputName1">First Name</label>
+									<input type="text" class="form-control" id="exampleInputName1"
+										placeholder="First Name" ng-model="user.fname" required="required">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-12 padding-zero padding-right-zero">
+								<div class="form-group">
+									<label class="sr-only" for="exampleInputName2">Last Name</label>
+									<input type="text" class="form-control" id="exampleInputName2"
+										placeholder="Last Name" ng-model="user.lname" required="required">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 col-sm-12 col-12 padding-zero">
+							<div class="col-md-6 col-sm-6 col-12 padding-zero padding-left-zero">
+								<ui-select ng-model="gender.selected" theme="bootstrap">
+									<ui-select-match placeholder="Gender">{{$select.selected.name}}</ui-select-match>
+									<ui-select-choices repeat="item in gender.items | filter: $select.search">
+										<div ng-bind-html="item.name | highlight: $select.search"></div>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="col-md-6 col-sm-6 col-12 padding-zero padding-right-zero">
+								<div class="btn-group grp-width" role="group" aria-label="age">
+									<div class="btn-group signup-width-left" role="group">
+										<ui-select ng-model="dob.mm.selected" theme="bootstrap">
+											<ui-select-match placeholder="MM">{{$select.selected.id}}</ui-select-match>
+											<ui-select-choices repeat="item in dob.mm.months | filter: $select.search">
+												<div ng-bind-html="item.name | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<div class="btn-group signup-width-mid" role="group">
+										<ui-select ng-model="dob.dd.selected" theme="bootstrap">
+											<ui-select-match placeholder="DD">{{$select.selected}}</ui-select-match>
+											<ui-select-choices repeat="item in dob.dd.days | filter: $select.search">
+												<div ng-bind-html="item | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<div class="btn-group signup-width-right" role="group">
+										<ui-select ng-model="dob.yyyy.selected" theme="bootstrap">
+											<ui-select-match placeholder="YY">{{$select.selected}}</ui-select-match>
+											<ui-select-choices repeat="item in dob.yyyy.years | filter: $select.search">
+												<div ng-bind-html="item | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="exampleInputEmail3">Email address</label>
+							<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email"
+								ng-model="user.email" required="required">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="exampleInputPassword3">Password</label>
+							<input type="password" name="password" class="form-control" id="exampleInputPassword3"
+								placeholder="Password" ng-model="user.password" required="required">
+						</div>
+						<div class="form-group"><label class="sr-only">Confirm Password</label>
+							<input type="password" name="confirmPassword" class="form-control"
+								placeholder="Confirm Password" ng-model="user.confirmPassword"
+								compare-to="user.password" required="required">
+						</div>
+						<span class="login-error-msg" ng-if="error" ng-hide="hideIncompleteMessage">{{error}}</span>
+						<div ng-if="registerForm.confirmPassword.$dirty" ng-hide="registerForm.confirmPassword.$valid">
+							Passwords don't match.
+						</div>
+						<button type="submit" class="btn btn-primary login-submit-btn">CREATE MY ACCOUNT</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-12 text-right">
+				<span class="login-signup">Already have an account?</span><a ui-sref="login"><button type="button"
+						class="btn btn-default">Sign In</button></a>
+			</div>
+		</div>
+	</div>
+</section>
